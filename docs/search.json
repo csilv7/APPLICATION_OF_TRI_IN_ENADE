@@ -1,0 +1,52 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "TEORIA DE RESPOSTA AO ITEM",
+    "section": "",
+    "text": "Prefácio\nNa Edumetria…\n\nEste é um Quarto Book. Para saber mais sobre Quarto Book, visite https://quarto.org/docs/books/.",
+    "crumbs": [
+      "Prefácio"
+    ]
+  },
+  {
+    "objectID": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html",
+    "href": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html",
+    "title": "1  Curso de Bacharelado em Sistemas de Informação",
+    "section": "",
+    "text": "1.1 Introdução",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Curso de Bacharelado em Sistemas de Informação</span>"
+    ]
+  },
+  {
+    "objectID": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html#análise-descritiva-dos-itens",
+    "href": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html#análise-descritiva-dos-itens",
+    "title": "1  Curso de Bacharelado em Sistemas de Informação",
+    "section": "1.2 Análise Descritiva dos Itens",
+    "text": "1.2 Análise Descritiva dos Itens",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Curso de Bacharelado em Sistemas de Informação</span>"
+    ]
+  },
+  {
+    "objectID": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html#análise-via-teoria-clássica-dos-testes-tct",
+    "href": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html#análise-via-teoria-clássica-dos-testes-tct",
+    "title": "1  Curso de Bacharelado em Sistemas de Informação",
+    "section": "1.3 Análise via Teoria Clássica dos Testes (TCT)",
+    "text": "1.3 Análise via Teoria Clássica dos Testes (TCT)\n\n1.3.1 Tabela de Frequência (Absoluta e Relativa) das Alternativas de Respostas\nVeja, a seguir, a Tabela 1.1 e Tabela 1.2. Que mostram, respectivamente, a distribuição de frequências absolutas alternativas às alternativas de resposta.\n\n\n\n\nTabela 1.1: Frequências das Alternativas de Respostas por Item.\n\n\n\n\n\n\n\n\n\nItem\nGabarito\nBranco\nMútiplas\nA\nB\nC\nD\nE\nVálidas\n\n\n\n\n1ª FG\nC\n51\n9\n1.170\n4.536\n2.714\n3.911\n1.400\n13.731\n\n\n2ª FG\nC\n23\n22\n1.360\n767\n7.462\n1.909\n2.248\n13.746\n\n\n3ª FG\nB\n99\n20\n2.640\n4.832\n2.591\n2.325\n1.284\n13.672\n\n\n4ª FG\nB\n17\n20\n767\n9.042\n373\n1.450\n2.122\n13.754\n\n\n5ª FG\nC\n16\n11\n164\n1.335\n8.180\n1.005\n3.080\n13.764\n\n\n6ª FG\nE\n20\n15\n598\n439\n564\n383\n11.772\n13.756\n\n\n7ª FG\nA\n24\n10\n4.828\n3.345\n1.507\n2.339\n1.738\n13.757\n\n\n8ª FG\nD\n27\n9\n420\n1.378\n1.670\n6.802\n3.485\n13.755\n\n\n1ª CE\nC\n15\n14\n1.727\n1.933\n1.420\n2.759\n5.923\n13.762\n\n\n2ª CE\nE\n16\n19\n2.944\n3.691\n1.999\n2.957\n2.165\n13.756\n\n\n3ª CE\nA\n19\n33\n3.316\n1.476\n2.885\n3.392\n2.670\n13.739\n\n\n4ª CE\nC\n35\n16\n2.522\n2.403\n2.925\n3.499\n2.391\n13.740\n\n\n5ª CE\nE\n25\n8\n1.955\n1.887\n1.823\n4.498\n3.595\n13.758\n\n\n6ª CE\nANULADA (E)\n12\n8\n4.643\n2.005\n1.928\n3.725\n1.470\n13.771\n\n\n7ª CE\nA\n22\n7\n1.684\n3.109\n2.582\n4.101\n2.286\n13.762\n\n\n8ª CE\nD\n11\n6\n2.772\n1.902\n3.556\n3.194\n2.350\n13.774\n\n\n9ª CE\nB\n20\n13\n3.634\n2.519\n1.739\n2.657\n3.209\n13.758\n\n\n10ª CE\nB\n25\n6\n3.396\n4.071\n1.916\n2.272\n2.105\n13.760\n\n\n11ª CE\nB\n21\n11\n3.031\n2.938\n2.218\n3.250\n2.322\n13.759\n\n\n12ª CE\nE\n22\n13\n2.646\n2.214\n2.533\n3.825\n2.538\n13.756\n\n\n13ª CE\nB\n31\n15\n2.903\n2.558\n2.297\n3.561\n2.426\n13.745\n\n\n14ª CE\nD\n29\n20\n3.108\n2.284\n2.991\n2.139\n3.220\n13.742\n\n\n15ª CE\nD\n29\n17\n2.315\n2.745\n2.207\n4.129\n2.349\n13.745\n\n\n16ª CE\nB\n32\n11\n2.599\n1.905\n2.978\n2.747\n3.519\n13.748\n\n\n17ª CE\nB\n32\n2\n2.427\n2.013\n2.788\n4.153\n2.376\n13.757\n\n\n18ª CE\nE\n32\n7\n2.505\n3.014\n2.637\n2.356\n3.240\n13.752\n\n\n19ª CE\nA\n41\n8\n2.061\n3.237\n2.821\n2.816\n2.807\n13.742\n\n\n20ª CE\nE\n43\n10\n3.010\n2.562\n2.742\n2.538\n2.886\n13.738\n\n\n21ª CE\nA\n34\n13\n2.188\n1.811\n3.133\n2.767\n3.845\n13.744\n\n\n22ª CE\nC\n50\n10\n2.232\n2.472\n2.602\n2.442\n3.983\n13.731\n\n\n23ª CE\nB\n49\n17\n2.984\n1.799\n3.103\n2.581\n3.258\n13.725\n\n\n24ª CE\nD\n50\n9\n3.635\n3.095\n2.172\n2.830\n2.000\n13.732\n\n\n25ª CE\nC\n58\n14\n3.428\n1.757\n3.440\n2.852\n2.242\n13.719\n\n\n26ª CE\nC\n54\n12\n2.323\n3.771\n2.459\n3.099\n2.073\n13.725\n\n\n27ª CE\nC\n73\n7\n2.022\n2.844\n2.682\n4.208\n1.955\n13.711\n\n\n\nFG: Formação Geral; CE: Componente Específico.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTabela 1.2: Frequências das Alternativas de Respostas por Item.\n\n\n\n\n\n\n\n\n\nItem Especificado\nGabarito\nA (%)\nB (%)\nC (%)\nD (%)\nE (%)\nTotal (%)\n\n\n\n\n1ª FG\nC\n8,52\n33,03\n19,77\n28,48\n10,20\n100,00\n\n\n2ª FG\nC\n9,89\n5,58\n54,28\n13,89\n16,35\n100,00\n\n\n3ª FG\nB\n19,31\n35,34\n18,95\n17,01\n9,39\n100,00\n\n\n4ª FG\nB\n5,58\n65,74\n2,71\n10,54\n15,43\n100,00\n\n\n5ª FG\nC\n1,19\n9,70\n59,43\n7,30\n22,38\n100,00\n\n\n6ª FG\nE\n4,35\n3,19\n4,10\n2,78\n85,58\n100,00\n\n\n7ª FG\nA\n35,09\n24,31\n10,95\n17,00\n12,63\n100,00\n\n\n8ª FG\nD\n3,05\n10,02\n12,14\n49,45\n25,34\n100,00\n\n\n1ª CE\nC\n12,55\n14,05\n10,32\n20,05\n43,04\n100,00\n\n\n2ª CE\nE\n21,40\n26,83\n14,53\n21,50\n15,74\n100,00\n\n\n3ª CE\nA\n24,14\n10,74\n21,00\n24,69\n19,43\n100,00\n\n\n4ª CE\nC\n18,36\n17,49\n21,29\n25,47\n17,40\n100,00\n\n\n5ª CE\nE\n14,21\n13,72\n13,25\n32,69\n26,13\n100,00\n\n\n6ª CE\nANULADA (E)\n33,72\n14,56\n14,00\n27,05\n10,67\n100,00\n\n\n7ª CE\nA\n12,24\n22,59\n18,76\n29,80\n16,61\n100,00\n\n\n8ª CE\nD\n20,12\n13,81\n25,82\n23,19\n17,06\n100,00\n\n\n9ª CE\nB\n26,41\n18,31\n12,64\n19,31\n23,32\n100,00\n\n\n10ª CE\nB\n24,68\n29,59\n13,92\n16,51\n15,30\n100,00\n\n\n11ª CE\nB\n22,03\n21,35\n16,12\n23,62\n16,88\n100,00\n\n\n12ª CE\nE\n19,24\n16,09\n18,41\n27,81\n18,45\n100,00\n\n\n13ª CE\nB\n21,12\n18,61\n16,71\n25,91\n17,65\n100,00\n\n\n14ª CE\nD\n22,62\n16,62\n21,77\n15,57\n23,43\n100,00\n\n\n15ª CE\nD\n16,84\n19,97\n16,06\n30,04\n17,09\n100,00\n\n\n16ª CE\nB\n18,90\n13,86\n21,66\n19,98\n25,60\n100,00\n\n\n17ª CE\nB\n17,64\n14,63\n20,27\n30,19\n17,27\n100,00\n\n\n18ª CE\nE\n18,22\n21,92\n19,18\n17,13\n23,56\n100,00\n\n\n19ª CE\nA\n15,00\n23,56\n20,53\n20,49\n20,43\n100,00\n\n\n20ª CE\nE\n21,91\n18,65\n19,96\n18,47\n21,01\n100,00\n\n\n21ª CE\nA\n15,92\n13,18\n22,80\n20,13\n27,98\n100,00\n\n\n22ª CE\nC\n16,26\n18,00\n18,95\n17,78\n29,01\n100,00\n\n\n23ª CE\nB\n21,74\n13,11\n22,61\n18,81\n23,74\n100,00\n\n\n24ª CE\nD\n26,47\n22,54\n15,82\n20,61\n14,56\n100,00\n\n\n25ª CE\nC\n24,99\n12,81\n25,07\n20,79\n16,34\n100,00\n\n\n26ª CE\nC\n16,93\n27,48\n17,92\n22,58\n15,10\n100,00\n\n\n27ª CE\nC\n14,75\n20,74\n19,56\n30,69\n14,26\n100,00\n\n\n\nFG: Formação Geral; CE: Componente Específico.\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3.2 Tabela de Proporção de Acertos (%)\nVeja, a seguir, a Tabela 1.3. Que apresenta as proporções de acertos para cada item.\n\n\n\n\nTabela 1.3: Proporção de Acertos dos Itens.\n\n\n\n\n\n\n\n\n\nItem Especificado\nGabarito\nProporção de Acertos (%)\n\n\n\n\n1ª FG\nC\n19,77\n\n\n2ª FG\nC\n54,28\n\n\n3ª FG\nB\n35,34\n\n\n4ª FG\nB\n65,74\n\n\n5ª FG\nC\n59,43\n\n\n6ª FG\nE\n85,58\n\n\n7ª FG\nA\n35,09\n\n\n8ª FG\nD\n49,45\n\n\n1ª CE\nC\n10,32\n\n\n2ª CE\nE\n15,74\n\n\n3ª CE\nA\n24,14\n\n\n4ª CE\nC\n21,29\n\n\n5ª CE\nE\n26,13\n\n\n6ª CE\nANULADA (E)\nNA\n\n\n7ª CE\nA\n12,24\n\n\n8ª CE\nD\n23,19\n\n\n9ª CE\nB\n18,31\n\n\n10ª CE\nB\n29,59\n\n\n11ª CE\nB\n21,35\n\n\n12ª CE\nE\n18,45\n\n\n13ª CE\nB\n18,61\n\n\n14ª CE\nD\n15,57\n\n\n15ª CE\nD\n30,04\n\n\n16ª CE\nB\n13,86\n\n\n17ª CE\nB\n14,63\n\n\n18ª CE\nE\n23,56\n\n\n19ª CE\nA\n15,00\n\n\n20ª CE\nE\n21,01\n\n\n21ª CE\nA\n15,92\n\n\n22ª CE\nC\n18,95\n\n\n23ª CE\nB\n13,11\n\n\n24ª CE\nD\n20,61\n\n\n25ª CE\nC\n25,07\n\n\n26ª CE\nC\n17,92\n\n\n27ª CE\nC\n19,56\n\n\n\nFG: Formação Geral; CE: Componente Específico.\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3.3 Histograma do Escore em Formação Geral, Componentes Específicos e Total\n\n\n\n\n\n\n\n\nFigura 1.1: Histograma dos Escore dos Participantes em Formação Geral.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 1.2: Histograma dos Escore dos Participantes em Componentes Específicos.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 1.3: Histograma dos Escore Total dos Participantes.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Curso de Bacharelado em Sistemas de Informação</span>"
+    ]
+  },
+  {
+    "objectID": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html#análise-via-teoria-de-resposta-ao-item-tri",
+    "href": "ANALYSIS_BY_COURSE/SISTEMAS_INFO.html#análise-via-teoria-de-resposta-ao-item-tri",
+    "title": "1  Curso de Bacharelado em Sistemas de Informação",
+    "section": "1.4 Análise via Teoria de Resposta ao Item (TRI)",
+    "text": "1.4 Análise via Teoria de Resposta ao Item (TRI)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Curso de Bacharelado em Sistemas de Informação</span>"
+    ]
+  }
+]

@@ -1,0 +1,460 @@
+:::: progress
+:::: {.progress-bar style="width: 100%;"}
+::::
+::::
+
+# Curso de Bacharelado em Sistemas de Informação
+
+```{r}
+#| label: Configuration R
+
+# --------------------------
+# [1] CONFIGURAÇÕES INICIAIS
+# --------------------------
+
+# Definir o Diretório do Dados
+setwd("~/DETRAN/TRI_PROJECT_DIEGO/")
+
+# Pacotes Carregados
+library(dplyr)
+library(stringr)
+library(ggplot2)
+
+library(gt)
+
+# Gabarito oficial da Prova
+template.oficial <- c(
+  "C", "C", "B", "B", "C", "E", "A", "D", "C", "E", "A", "C", "E", "ANULADA (E)", 
+  "A", "D", "B", "B", "B", "E", "B", "D", "D", "B", "B", "E", "A", "E", "A", 
+  "C", "B", "D", "C", "C", "C"
+)
+
+# Número de Itens
+n.itens.FG <- 8
+n.itens.CE <- 27
+n.itens <- n.itens.FG + n.itens.CE
+
+# Index
+index <- c(paste0(1:n.itens.FG, "ª FG"), paste0(1:n.itens.CE, "ª CE"))
+
+# ----------------------------------------------
+# [2] CARREGAMENTO E POSSÍVEIS AJUSTES DOS DADOS
+# ----------------------------------------------
+
+# Caminho do arquivo.rds
+path <- "MICRODADOS_ENADE_2017_LGPD/DADOS_GERAIS_SISTEMAS.rds"
+
+# Leitura do arquivo.rds
+SIS.INFO <- readRDS(file = path)
+
+# Ajustes das Colunas de Vetores
+SIS.INFO.AUX <- SIS.INFO %>% mutate(
+  DS_VT_GAB_OFG_FIN_ADJ = strsplit(str_remove_all(DS_VT_GAB_OFG_FIN, "[^A-Z]"), ""),
+  DS_VT_GAB_OCE_FIN_ADJ = strsplit(str_remove_all(DS_VT_GAB_OCE_FIN, "[^A-Z]"), ""),
+  DS_VT_ESC_OFG_ADJ = strsplit(str_remove_all(DS_VT_ESC_OFG, "[^A-Z\\.\\*]"), ""),
+  DS_VT_ESC_OCE_ADJ = strsplit(str_remove_all(DS_VT_ESC_OCE, "[^A-Z\\.\\*]"), "")
+)
+```
+
+## Introdução
+
+## Análise Descritiva dos Itens
+
+## Análise via Teoria Clássica dos Testes (TCT)
+
+### Tabela de Frequência (Absoluta e Relativa) das Alternativas de Respostas
+
+```{r}
+#| label: FREQ_ALTERNATIVE_ABSOLUTE_AND_RELATIVE
+
+# ------------------------------------------------
+# [3] ANÁLISE VIA TEÓRIA CLÁSSICA DOS TESTES (TCT)
+# ------------------------------------------------
+
+# ---------------------------------------------------------
+# [3.1] TABELA COM FREQUÊNCIA DAS ALTERNATIVAS DE RESPOSTAS
+# ---------------------------------------------------------
+
+# Criando Data Frame de Armazenamento
+tbl.freq.FG <- tbl.freq.CE <- data.frame()
+
+# Iteração de preenchimento das informações FG
+for (k in 1:n.itens.FG) {
+  # Distribuição de Frequências para k-ésima resposta
+  frequencys <- table(sapply(SIS.INFO.AUX$DS_VT_ESC_OFG_ADJ, `[`, k))
+  
+  # Total de válidas
+  valid <- sum(frequencys[LETTERS[1:5]])
+  
+  # Contagem de brancos (se resposta em branco ".")
+  blank <- as.numeric(frequencys["."])
+  
+  # Contagem de múltiplas respostas (ex: "*")
+  multiple <- as.numeric(frequencys["*"])
+  
+  # Atualiza o Data Frame que armazena as informações
+  tbl.freq.FG <- bind_rows(
+    tbl.freq.FG,
+    data.frame(
+      Gabarito = template.oficial[k],
+      Branco = blank,
+      Multiples = multiple,
+      A = frequencys["A"],
+      B = frequencys["B"],
+      C = frequencys["C"],
+      D = frequencys["D"],
+      E = frequencys["E"],
+      Valids = valid
+    )
+  )
+}
+
+# Iteração de preenchimento das informações
+for (k in 1:n.itens.CE) {
+  # Distribuição de Frequências para k-ésima resposta
+  frequencys <- table(sapply(SIS.INFO.AUX$DS_VT_ESC_OCE_ADJ, `[`, k))
+  
+  # Total de válidas
+  valid <- sum(frequencys[LETTERS[1:5]])
+  
+  # Contagem de brancos (se resposta em branco ".")
+  blank <- as.numeric(frequencys["."])
+  
+  # Contagem de múltiplas respostas (ex: "*")
+  multiple <- as.numeric(frequencys["*"])
+  
+  # Ajuste do índice
+  k.adj <- k + 8
+  
+  # Atualiza o Data Frame que armazena as informações
+  tbl.freq.CE <- bind_rows(
+    tbl.freq.CE,
+    data.frame(
+      Gabarito = template.oficial[k.adj],
+      Branco = blank,
+      Multiples = multiple,
+      A = frequencys["A"],
+      B = frequencys["B"],
+      C = frequencys["C"],
+      D = frequencys["D"],
+      E = frequencys["E"],
+      Valids = valid
+    )
+  )
+}
+
+# Tabela Final
+tbl.freq <- bind_rows(tbl.freq.FG, tbl.freq.CE) %>%
+  mutate(ITEM_ESPEC = index) %>%
+  select(
+    ITEM_ESPEC, Gabarito, Branco, Multiples, 
+    A, B, C, D, E, Valids
+  ) %>%
+  `row.names<-`(1:length(index))
+
+# ---------------------------------------
+# [3.1.3] TABELA DE FREQUÊNCIAS RELATIVAS
+# ---------------------------------------
+
+# Frequências Relativas
+tbl.freq_relative <- tbl.freq[, -c(3, 4)]
+tbl.freq_relative[, 3:7] <- (tbl.freq_relative[, 3:7] / tbl.freq_relative[, 8]) * 100
+tbl.freq_relative[, 8] <- rowSums(tbl.freq_relative[, 3:7])
+```
+
+Veja, a seguir, a @tbl-FREQ_ALTERNATIVE_ABS e @tbl-FREQ_ALTERNATIVE_REL. Que mostram, respectivamente, a distribuição de frequências absolutas alternativas às alternativas de resposta.
+
+```{r}
+#| tbl-cap: "Frequências das Alternativas de Respostas por Item."
+#| label: tbl-FREQ_ALTERNATIVE_ABS
+
+# Tabela com o Pacote gt
+gt(tbl.freq) %>%
+  cols_label(
+    ITEM_ESPEC = md("**Item**"),
+    Gabarito   = md("**Gabarito**"),
+    Branco     = md("**Branco**"),
+    Multiples  = md("**Mútiplas**"),
+    A          = md("**A**"),
+    B          = md("**B**"),
+    C          = md("**C**"),
+    D          = md("**D**"),
+    E          = md("**E**"),
+    Valids     = md("**Válidas**")
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  fmt_number(
+    columns = 5:10,
+    decimals = 0,
+    sep_mark = "."
+  ) %>%
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+```
+
+```{r}
+#| tbl-cap: "Frequências das Alternativas de Respostas por Item."
+#| label: tbl-FREQ_ALTERNATIVE_REL
+
+# ---------------------------------------
+# [3.1.3.1] TABELA TABELA COM PACOTE gt
+# ---------------------------------------
+
+# Tabela com o Pacote gt
+gt(tbl.freq_relative) %>%
+  cols_label(
+    ITEM_ESPEC = md("**Item Especificado**"),
+    Gabarito   = md("**Gabarito**"),
+    A          = md("**A (%)**"),
+    B          = md("**B (%)**"),
+    C          = md("**C (%)**"),
+    D          = md("**D (%)**"),
+    E          = md("**E (%)**"),
+    Valids     = md("**Total (%)**")
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  fmt_number(
+    columns = 3:8,
+    decimals = 2,
+    dec_mark = ","
+  ) %>%
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+```
+
+### Tabela de Proporção de Acertos (%)
+
+```{r}
+#| label: PROP_HITS
+
+# ---------------------------------------
+# [3.2] TABELA COM A PROPORÇÃO DE ACERTOS
+# ---------------------------------------
+
+# Criando Data Frame de Armazenamento
+tbl.prop_hit <- data.frame()
+
+for (id in 1:n.itens) {
+  # Total Válido
+  valid.id <- tbl.freq[["Valids"]][id]
+  
+  # Extração do Gabarito
+  gab <- as.character(tbl.freq %>% select(Gabarito) %>% slice(id))
+  
+  # Proporção de Acertos (Verificação)
+  if (gab == "ANULADA (E)") {
+    # Proporção de Acertos
+    prop.hit <- NA
+  } else {
+    # Proporção de Acertos
+    prop.hit <- tbl.freq[[gab]][id] / valid.id
+  }
+  
+  # Atualização das Informações
+  tbl.prop_hit <- bind_rows(
+    tbl.prop_hit,
+    data.frame(
+      ITEM_ESPEC = tbl.freq[["ITEM_ESPEC"]][id],
+      GABARITO   = gab,
+      PROP_HIT   = prop.hit * 100
+    )
+  )
+}
+```
+
+Veja, a seguir, a @tbl-PROP_HITS. Que apresenta as proporções de acertos para cada item.
+
+```{r}
+#| tbl-cap: "Proporção de Acertos dos Itens."
+#| label: tbl-PROP_HITS
+
+# -----------------------------------
+# [3.2.1] TABELA TABELA COM PACOTE gt
+# -----------------------------------
+
+# Tabela com o Pacote gt
+gt(tbl.prop_hit) %>%
+  cols_label(
+    ITEM_ESPEC = md("**Item Especificado**"),
+    GABARITO   = md("**Gabarito**"),
+    PROP_HIT   = md("**Proporção de Acertos (%)**")
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) %>%
+  fmt_number(
+    columns = everything(),
+    decimals = 2,
+    dec_mark = ","
+  ) %>%
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+```
+
+### Histograma do Escore em Formação Geral, Componentes Específicos e Total
+
+```{r}
+#| label: CALCULE_SCORE
+
+# -----------------------------
+# [3.3] HISTOGRAMAS DOS ESCORES
+# -----------------------------
+
+# ---------------------------
+# [3.3.1] MATRIZ DE RESPOSTAS
+# ---------------------------
+
+# Matriz de acertos (0/1) para todos os participantes
+matrix.resp <- matrix(NA, nrow = nrow(SIS.INFO.AUX), ncol = n.itens)
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.FG) {
+  # Extrai a Resposta e o Gabarito do item k e Armezena os Dados
+  matrix.resp[, k] <- sapply(SIS.INFO.AUX$DS_VT_ESC_OFG_ADJ, `[`, k)
+}
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.CE) {
+  # Ajuste do índice
+  k.adj <- k + 8
+  
+  # Extrai a Resposta e o Gabarito do item k e Armezena os Dados
+  matrix.resp[, k.adj] <- sapply(SIS.INFO.AUX$DS_VT_ESC_OCE_ADJ, `[`, k)
+}
+
+# -------------------------
+# [3.3.2] MATRIZ DE ACERTOS
+# -------------------------
+
+# Matriz de acertos (0/1) para todos os participantes
+matrix.hits <- matrix(NA, nrow = nrow(SIS.INFO.AUX), ncol = n.itens)
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.FG) {
+  # Extrai a Resposta e o Gabarito do item i
+  response.item <- sapply(SIS.INFO.AUX$DS_VT_ESC_OFG_ADJ, `[`, k)
+  
+  # Acertos (Verificação)
+  if (template.oficial[k] == "ANULADA (E)") {
+    # Acertos
+    hits <- NA
+    
+    # Armezenamento dos Dados
+    matrix.hits[, k] <- hits
+  } else {
+    # Acertos
+    hits <- as.integer(response.item == template.oficial[k])
+    
+    # Armezenamento dos Dados
+    matrix.hits[, k] <- hits
+  }
+}
+
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.CE) {
+  # Extrai a Resposta e o Gabarito do item i
+  response.item <- sapply(SIS.INFO.AUX$DS_VT_ESC_OCE_ADJ, `[`, k)
+  
+  # Ajuste do índice
+  k.adj <- k + 8
+
+  # Acertos (Verificação)
+  if (template.oficial[k.adj] == "ANULADA (E)") {
+    # Acertos
+    hits <- NA
+
+    # Armezenamento dos Dados
+    matrix.hits[, k.adj] <- hits
+  } else {
+    # Acertos
+    hits <- as.integer(response.item == template.oficial[k.adj])
+
+    # Armezenamento dos Dados
+    matrix.hits[, k.adj] <- hits
+  }
+}
+
+# --------------------
+# [3.3.3] ESCORE TOTAL
+# --------------------
+
+# Escore FG
+score.FG <- rowSums(matrix.hits[, 1:n.itens.FG], na.rm = T)
+
+# Escore CE
+score.CE <- rowSums(matrix.hits[, (1 + n.itens.FG):(n.itens)], na.rm = T)
+
+# Escore Total
+score.tot <- rowSums(matrix.hits, na.rm = T)
+
+# ------------------
+# [3.3.4] HISTOGRAMA
+# ------------------
+```
+
+```{r}
+#| fig-cap: "Histograma dos Escore dos Participantes em Formação Geral."
+#| label: fig-HIST_SCORE_FG
+
+# Histogrma com ggplot2
+ggplot(data = NULL) +
+  geom_histogram(aes(x = score.FG), bins = n.itens.FG, color = "white", fill = "steelblue") +
+  xlim(0, n.itens.FG) +
+  labs(x = "Escore", y = "Frequência") +
+  theme_classic(base_size = 12) +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+```
+
+```{r}
+#| fig-cap: "Histograma dos Escore dos Participantes em Componentes Específicos."
+#| label: fig-HIST_SCORE_CE
+
+# Histogrma com ggplot2
+ggplot(data = NULL) +
+  geom_histogram(aes(x = score.CE), bins = n.itens.CE, color = "white", fill = "steelblue") +
+  xlim(0, n.itens.CE) +
+  labs(x = "Escore", y = "Frequência") +
+  theme_classic(base_size = 12) +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+```
+
+
+```{r}
+#| fig-cap: "Histograma dos Escore Total dos Participantes."
+#| label: fig-HIST_SCORE_TOTAL
+
+# Histogrma com ggplot2
+ggplot(data = NULL) +
+  geom_histogram(aes(x = score.tot), bins = n.itens, color = "white", fill = "steelblue") +
+  xlim(0, n.itens) +
+  labs(x = "Escore", y = "Frequência") +
+  theme_classic(base_size = 12) +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+```
+
+## Análise via Teoria de Resposta ao Item (TRI)
+
+:::: progress
+:::: {.progress-bar style="width: 100%;"}
+::::
+::::
