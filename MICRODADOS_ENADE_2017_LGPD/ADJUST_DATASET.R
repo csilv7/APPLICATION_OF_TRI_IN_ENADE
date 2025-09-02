@@ -11,7 +11,7 @@
 # ======================================
 
 # Definir o Diretório do Dados
-setwd("~/DETRAN/TRI_PROJECT_DIEGO/MICRODADOS_ENADE_2017_LGPD/")
+setwd("C:/Users/usuario/Documents/github_2025/TRI_ENADE_2017/MICRODADOS_ENADE_2017_LGPD")
 
 # Pacotes Carregados
 library(dplyr)
