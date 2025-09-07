@@ -393,7 +393,7 @@ for (k in 1:n.itens.CE) {
 score.FG <- rowSums(matrix.hits[, 1:n.itens.FG], na.rm = T)
 
 # Escore CE
-score.CE <- rowSums(matrix.hits[, (1 + n.itens.FG):(n.itens)], na.rm = T)
+score.CE <- rowSums(matrix.hits[, (n.itens.FG+1):(n.itens)], na.rm = T)
 
 # Escore Total
 score.tot <- rowSums(matrix.hits, na.rm = T)
@@ -451,6 +451,369 @@ ggplot(data = NULL) +
     axis.title.y = element_text(face = "bold")
   )
 ```
+
+### Proporção de Acertos *versus* Escore por Item
+
+```{r}
+#| label: PROP_HITS_AND_SCORE_BY_ITEM
+
+# -------------------------------------
+# [3.3] PROPORÇÃO DE ACERTOS POR ESCORE
+# -------------------------------------
+
+# Converter para Data Drame
+df.hits <- as.data.frame(matrix.hits)
+
+# Nome dos Itens
+# index <- index
+
+# Ajustar o nome das colunas com o `index`
+colnames(df.hits) <- index
+
+# Adiciona `score_total` à base
+df.hits$SCORE <- score.tot
+
+# Função para calcular proporção de acertos por escore para cada item
+get.curves_by_item <- function(data, itens_ids) {
+  # Data Frame para Armazenar Resultados
+  curves <- data.frame()
+  
+  # Iteração de Obtenção dos Dados
+  for (item in itens_ids) {
+    curve.by.item <- data %>%
+      group_by(SCORE) %>%
+      summarise(
+        PROP_HIT = mean(get(item), na.rm = TRUE)
+      ) %>%
+      mutate(ITEM = item)
+    
+    # Join dos Dados
+    curves <- bind_rows(curves, curve.by.item)
+  }
+  # Retornar os DadoS
+  return(curves)
+}
+```
+
+O objetivo desta análise é avaliar a *Proporção de Acertos* por *Escore* de cada item.
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5 apresenta a proporção de acertos por escore para os itens de 1 (1º FG) a 5 (5º FG).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 1 (1º FG) a 5 (5º FG) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5
+
+# ----------------------
+# [3.3.1] ITENS DE 1 A 5
+# ----------------------
+
+# Itens
+itens1 <- 1:5
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p1 <- get.curves_by_item(df.hits, index[itens1]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens1[1]], " A ", index[itens1[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p1
+print(p1)
+```
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10 apresenta a proporção de acertos por escore para os itens de 6 (6º FG) a 10 (2º CE).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 6 (6º FG) a 10 (2º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10
+
+# -----------------------
+# [3.3.2] ITENS DE 6 A 10
+# -----------------------
+
+# Itens
+itens2 <- 6:10
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p2 <- get.curves_by_item(df.hits, index[itens2]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens2[1]], " A ", index[itens2[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p2
+print(p2)
+```
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15 apresenta a proporção de acertos por escore para os itens de 11 (3º CE) a 15 (7º CE).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 11 (3º CE) a 15 (7º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15
+
+# ------------------------
+# [3.3.3] ITENS DE 11 A 15
+# ------------------------
+
+# Itens
+itens3 <- 11:15
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p3 <- get.curves_by_item(df.hits, index[itens3]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens3[1]], " A ", index[itens3[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p3
+print(p3)
+```
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20 apresenta a proporção de acertos por escore para os itens de 16 (8º CE) a 20 (12º CE).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 16 (8º CE) a 20 (12º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20
+
+# ------------------------
+# [3.3.4] ITENS DE 16 A 20
+# ------------------------
+
+# Itens
+itens4 <- 16:20
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p4 <- get.curves_by_item(df.hits, index[itens4]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens4[1]], " A ", index[itens4[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p4
+print(p4)
+```
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25 apresenta a proporção de acertos por escore para os itens de 21 (13º CE) a 25 (17º CE).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 21 (13º CE) a 25 (17º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25
+
+# ------------------------
+# [3.3.5] ITENS DE 21 A 25
+# ------------------------
+
+# Itens
+itens5 <- 21:25
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p5 <- get.curves_by_item(df.hits, index[itens5]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens5[1]], " A ", index[itens5[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p5
+print(p5)
+```
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30 apresenta a proporção de acertos por escore para os itens de 26 (18º CE) a 30 (22º CE).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 26 (18º CE) a 30 (22º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30
+
+# ------------------------
+# [3.3.6] ITENS DE 26 A 30
+# ------------------------
+
+# Itens
+itens6 <- 26:30
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p6 <- get.curves_by_item(df.hits, index[itens6]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens6[1]], " A ", index[itens6[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p6
+print(p6)
+```
+
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35 apresenta a proporção de acertos por escore para os itens de 31 (23º CE) a 35 (27º CE).
+
+```{r}
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 31 (23º CE) a 35 (27º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35
+
+# ------------------------
+# [3.3.7] ITENS DE 31 A 35
+# ------------------------
+
+# Itens
+itens7 <- 31:35
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p7 <- get.curves_by_item(df.hits, index[itens7]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens7[1]], " A ", index[itens7[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p7
+print(p7)
+```
+
+### Grupos de Desempenho
+
+```{r}
+#| label: DIV_GROUP_DISCR
+
+# --------------------------
+# [3.5] GRUPOS DE DESEMPENHO
+# --------------------------
+
+# Calculando P1 (percentil 33%) e P3 (percentil 67%)
+q1 <- quantile(df.hits$SCORE, probs = 1/3, na.rm = TRUE)
+q3 <- quantile(df.hits$SCORE, probs = 2/3, na.rm = TRUE)
+```
+
+
+Com base na distribuição dos escores totais, os pontos de corte foram definidos nos percentis 33% ($\approx 1/3$ - PI) e 67% ($\approx 2/3$ - PS). Assim, os participantes foram agrupados em três níveis de desempenho:
+
+* **Grupo 1 (Baixo Desempenho):** pontuação inferior a **`r as.numeric(q1)`**;
+* **Grupo 2 (Médio Desempenho):** pontuação entre **`r as.numeric(q1)`** e **`r as.numeric(q3)`**;
+* **Grupo 3 (Alto Desempenho):** pontuação maior ou igual a **`r as.numeric(q3)`**.
+
+Essa segmentação é útil para analisar se os itens da prova conseguem diferenciar bem os candidatos (discriminação), além de ajudar a identificar questões que são muito fáceis, muito difíceis ou que não discriminam.
+
+Posteriormente, essa divisão permitirá calcular indicadores como **discriminação clássica** (diferença entre proporções de acerto nos Grupos 3 e 1) e **ponto bisserial**.
+
+Veja a @tbl-DIV_GROUP_DISCR, que apresenta como ficou a divisão dos dados por meio de frequências absolutas e relativas
+
+```{r}
+#| tbl-cap: "Frequência dos Grupos de Desempenho da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: tbl-DIV_GROUP_DISCR
+
+# Criar variável de Grupo com base nas pontuações
+df.hits$GRUPO <- cut(
+  df.hits$SCORE,
+  breaks = c(-Inf, q1, q3, Inf),
+  labels = c("GRUPO 1","GRUPO 2", "GRUPO 3"),
+  include.lowest = TRUE,
+  right = FALSE
+)
+
+# Armazenar os Resultados no Formato de Data Frame
+tbl.div_group <- data.frame(
+  FREQ = as.numeric(table(df.hits$GRUPO)),
+  PERCENT = as.numeric(prop.table(table(df.hits$GRUPO))) * 100
+)
+
+# Ajuste do Nome das Linhas
+row.names(tbl.div_group) <- str_to_title(c("GRUPO 1","GRUPO 2", "GRUPO 3"))
+
+# Visualizar 
+gt(tbl.div_group, rownames_to_stub = T) %>%
+  cols_label(
+    FREQ = md("**Frquência**"), PERCENT = md("**Percentual**")
+  ) %>%
+  fmt_number(columns = FREQ, decimals = 0, sep_mark = ".") %>%
+  fmt_number(columns = PERCENT, decimals = 2, dec_mark = ",")
+```
+
 
 ## Análise via Teoria de Resposta ao Item (TRI)
 

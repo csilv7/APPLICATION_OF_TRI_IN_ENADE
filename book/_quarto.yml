@@ -1,6 +1,6 @@
 project:
   type: book
-  output-dir: C:\Users\user\Documents\DETRAN\TRI_PROJECT_DIEGO\book\docs
+  output-dir: C:\Users\user\Documents\DETRAN\TRI_PROJECT_DIEGO\docs
 
 book:
   title: "TEORIA DE RESPOSTA AO ITEM"
@@ -50,6 +50,7 @@ format:
     warning: false
     message: false
   pdf:
+    keep-tex: true
     documentclass: scrreprt
     pdf-engine: lualatex
     number-sections: true

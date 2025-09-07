@@ -1,0 +1,665 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  portuguese,
+  11pt,
+  a4paper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage[left=2.5cm,top=2.5cm,right=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage{multirow}
+\KOMAoption{captions}{tableheading}
+\usepackage{indentfirst}
+\usepackage{latexsym,amssymb,amsmath,amsfonts}
+\usepackage{graphicx} % Figuras
+\usepackage{latexsym, amssymb, amsmath, amsfonts, amsthm} % Formatação Matemática
+\usepackage{xcolor}
+\usepackage{float, caption}
+\floatplacement{table}{H}
+\floatplacement{figure}{H}
+\captionsetup[table]{position=above}
+\captionsetup[figure]{position=below}
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Índice}
+\else
+  \newcommand\contentsname{Índice}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Lista de Figuras}
+\else
+  \newcommand\listfigurename{Lista de Figuras}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Lista de Tabelas}
+\else
+  \newcommand\listtablename{Lista de Tabelas}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figura}
+\else
+  \newcommand\figurename{Figura}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabela}
+\else
+  \newcommand\tablename{Tabela}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listagem}
+\newcommand*\listoflistings{\listof{codelisting}{Lista de Listagens}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={TEORIA DE RESPOSTA AO ITEM},
+  pdfauthor={Mário Diego Rocha Valente; Breno Cauã Rodrigues da Silva},
+  pdflang={pt},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{TEORIA DE RESPOSTA AO ITEM}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{COM DADOS DO ENADE}
+\author{Mário Diego Rocha Valente \\ Breno Cauã Rodrigues da Silva}
+\date{}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Índice}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Prefácio}\label{prefuxe1cio}
+\addcontentsline{toc}{chapter}{Prefácio}
+
+\markboth{Prefácio}{Prefácio}
+
+Na Edumetria\ldots{}
+
+\begin{center}\hrule\end{center}
+
+Este é um \textbf{Quarto Book}. Para saber mais sobre \textbf{Quarto
+Book}, visite \url{https://quarto.org/docs/books/}.
+
+\begin{center}\hrule\end{center}
+
+\part{ANÁLISE DO ENADE POR CURSOS}
+
+\bookmarksetup{startatroot}
+
+\chapter{Curso de Bacharelado em Sistemas de
+Informação}\label{curso-de-bacharelado-em-sistemas-de-informauxe7uxe3o}
+
+\section{Introdução}\label{introduuxe7uxe3o}
+
+\section{Análise Descritiva dos
+Itens}\label{anuxe1lise-descritiva-dos-itens}
+
+\section{Análise via Teoria Clássica dos Testes
+(TCT)}\label{anuxe1lise-via-teoria-cluxe1ssica-dos-testes-tct}
+
+\subsection{Tabela de Frequência (Absoluta e Relativa) das Alternativas
+de
+Respostas}\label{tabela-de-frequuxeancia-absoluta-e-relativa-das-alternativas-de-respostas}
+
+Veja, a seguir, a Tabela~\ref{tbl-FREQ_ALTERNATIVE_ABS} e
+Tabela~\ref{tbl-FREQ_ALTERNATIVE_REL}. Que mostram, respectivamente, a
+distribuição de frequências absolutas alternativas às alternativas de
+resposta.
+
+\begin{table}
+
+\caption{\label{tbl-FREQ_ALTERNATIVE_ABS}Frequências das Alternativas de
+Respostas por Item.}
+
+\centering{
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}cccccccccc}
+\toprule
+\textbf{Item} & \textbf{Gabarito} & \textbf{Branco} & \textbf{Mútiplas} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} & \textbf{Válidas} \\ 
+\midrule\addlinespace[2.5pt]
+1ª FG & C & 51 & 9 & 1.170 & 4.536 & 2.714 & 3.911 & 1.400 & 13.731 \\ 
+2ª FG & C & 23 & 22 & 1.360 & 767 & 7.462 & 1.909 & 2.248 & 13.746 \\ 
+3ª FG & B & 99 & 20 & 2.640 & 4.832 & 2.591 & 2.325 & 1.284 & 13.672 \\ 
+4ª FG & B & 17 & 20 & 767 & 9.042 & 373 & 1.450 & 2.122 & 13.754 \\ 
+5ª FG & C & 16 & 11 & 164 & 1.335 & 8.180 & 1.005 & 3.080 & 13.764 \\ 
+6ª FG & E & 20 & 15 & 598 & 439 & 564 & 383 & 11.772 & 13.756 \\ 
+7ª FG & A & 24 & 10 & 4.828 & 3.345 & 1.507 & 2.339 & 1.738 & 13.757 \\ 
+8ª FG & D & 27 & 9 & 420 & 1.378 & 1.670 & 6.802 & 3.485 & 13.755 \\ 
+1ª CE & C & 15 & 14 & 1.727 & 1.933 & 1.420 & 2.759 & 5.923 & 13.762 \\ 
+2ª CE & E & 16 & 19 & 2.944 & 3.691 & 1.999 & 2.957 & 2.165 & 13.756 \\ 
+3ª CE & A & 19 & 33 & 3.316 & 1.476 & 2.885 & 3.392 & 2.670 & 13.739 \\ 
+4ª CE & C & 35 & 16 & 2.522 & 2.403 & 2.925 & 3.499 & 2.391 & 13.740 \\ 
+5ª CE & E & 25 & 8 & 1.955 & 1.887 & 1.823 & 4.498 & 3.595 & 13.758 \\ 
+6ª CE & ANULADA (E) & 12 & 8 & 4.643 & 2.005 & 1.928 & 3.725 & 1.470 & 13.771 \\ 
+7ª CE & A & 22 & 7 & 1.684 & 3.109 & 2.582 & 4.101 & 2.286 & 13.762 \\ 
+8ª CE & D & 11 & 6 & 2.772 & 1.902 & 3.556 & 3.194 & 2.350 & 13.774 \\ 
+9ª CE & B & 20 & 13 & 3.634 & 2.519 & 1.739 & 2.657 & 3.209 & 13.758 \\ 
+10ª CE & B & 25 & 6 & 3.396 & 4.071 & 1.916 & 2.272 & 2.105 & 13.760 \\ 
+11ª CE & B & 21 & 11 & 3.031 & 2.938 & 2.218 & 3.250 & 2.322 & 13.759 \\ 
+12ª CE & E & 22 & 13 & 2.646 & 2.214 & 2.533 & 3.825 & 2.538 & 13.756 \\ 
+13ª CE & B & 31 & 15 & 2.903 & 2.558 & 2.297 & 3.561 & 2.426 & 13.745 \\ 
+14ª CE & D & 29 & 20 & 3.108 & 2.284 & 2.991 & 2.139 & 3.220 & 13.742 \\ 
+15ª CE & D & 29 & 17 & 2.315 & 2.745 & 2.207 & 4.129 & 2.349 & 13.745 \\ 
+16ª CE & B & 32 & 11 & 2.599 & 1.905 & 2.978 & 2.747 & 3.519 & 13.748 \\ 
+17ª CE & B & 32 & 2 & 2.427 & 2.013 & 2.788 & 4.153 & 2.376 & 13.757 \\ 
+18ª CE & E & 32 & 7 & 2.505 & 3.014 & 2.637 & 2.356 & 3.240 & 13.752 \\ 
+19ª CE & A & 41 & 8 & 2.061 & 3.237 & 2.821 & 2.816 & 2.807 & 13.742 \\ 
+20ª CE & E & 43 & 10 & 3.010 & 2.562 & 2.742 & 2.538 & 2.886 & 13.738 \\ 
+21ª CE & A & 34 & 13 & 2.188 & 1.811 & 3.133 & 2.767 & 3.845 & 13.744 \\ 
+22ª CE & C & 50 & 10 & 2.232 & 2.472 & 2.602 & 2.442 & 3.983 & 13.731 \\ 
+23ª CE & B & 49 & 17 & 2.984 & 1.799 & 3.103 & 2.581 & 3.258 & 13.725 \\ 
+24ª CE & D & 50 & 9 & 3.635 & 3.095 & 2.172 & 2.830 & 2.000 & 13.732 \\ 
+25ª CE & C & 58 & 14 & 3.428 & 1.757 & 3.440 & 2.852 & 2.242 & 13.719 \\ 
+26ª CE & C & 54 & 12 & 2.323 & 3.771 & 2.459 & 3.099 & 2.073 & 13.725 \\ 
+27ª CE & C & 73 & 7 & 2.022 & 2.844 & 2.682 & 4.208 & 1.955 & 13.711 \\ 
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+FG: Formação Geral; CE: Componente Específico.\\
+\end{minipage}
+
+}
+
+\end{table}%
+
+\begin{table}
+
+\caption{\label{tbl-FREQ_ALTERNATIVE_REL}Frequências das Alternativas de
+Respostas por Item.}
+
+\centering{
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}cccccccc}
+\toprule
+\textbf{Item Especificado} & \textbf{Gabarito} & \textbf{A (\%)} & \textbf{B (\%)} & \textbf{C (\%)} & \textbf{D (\%)} & \textbf{E (\%)} & \textbf{Total (\%)} \\ 
+\midrule\addlinespace[2.5pt]
+1ª FG & C & 8,52 & 33,03 & 19,77 & 28,48 & 10,20 & 100,00 \\ 
+2ª FG & C & 9,89 & 5,58 & 54,28 & 13,89 & 16,35 & 100,00 \\ 
+3ª FG & B & 19,31 & 35,34 & 18,95 & 17,01 & 9,39 & 100,00 \\ 
+4ª FG & B & 5,58 & 65,74 & 2,71 & 10,54 & 15,43 & 100,00 \\ 
+5ª FG & C & 1,19 & 9,70 & 59,43 & 7,30 & 22,38 & 100,00 \\ 
+6ª FG & E & 4,35 & 3,19 & 4,10 & 2,78 & 85,58 & 100,00 \\ 
+7ª FG & A & 35,09 & 24,31 & 10,95 & 17,00 & 12,63 & 100,00 \\ 
+8ª FG & D & 3,05 & 10,02 & 12,14 & 49,45 & 25,34 & 100,00 \\ 
+1ª CE & C & 12,55 & 14,05 & 10,32 & 20,05 & 43,04 & 100,00 \\ 
+2ª CE & E & 21,40 & 26,83 & 14,53 & 21,50 & 15,74 & 100,00 \\ 
+3ª CE & A & 24,14 & 10,74 & 21,00 & 24,69 & 19,43 & 100,00 \\ 
+4ª CE & C & 18,36 & 17,49 & 21,29 & 25,47 & 17,40 & 100,00 \\ 
+5ª CE & E & 14,21 & 13,72 & 13,25 & 32,69 & 26,13 & 100,00 \\ 
+6ª CE & ANULADA (E) & 33,72 & 14,56 & 14,00 & 27,05 & 10,67 & 100,00 \\ 
+7ª CE & A & 12,24 & 22,59 & 18,76 & 29,80 & 16,61 & 100,00 \\ 
+8ª CE & D & 20,12 & 13,81 & 25,82 & 23,19 & 17,06 & 100,00 \\ 
+9ª CE & B & 26,41 & 18,31 & 12,64 & 19,31 & 23,32 & 100,00 \\ 
+10ª CE & B & 24,68 & 29,59 & 13,92 & 16,51 & 15,30 & 100,00 \\ 
+11ª CE & B & 22,03 & 21,35 & 16,12 & 23,62 & 16,88 & 100,00 \\ 
+12ª CE & E & 19,24 & 16,09 & 18,41 & 27,81 & 18,45 & 100,00 \\ 
+13ª CE & B & 21,12 & 18,61 & 16,71 & 25,91 & 17,65 & 100,00 \\ 
+14ª CE & D & 22,62 & 16,62 & 21,77 & 15,57 & 23,43 & 100,00 \\ 
+15ª CE & D & 16,84 & 19,97 & 16,06 & 30,04 & 17,09 & 100,00 \\ 
+16ª CE & B & 18,90 & 13,86 & 21,66 & 19,98 & 25,60 & 100,00 \\ 
+17ª CE & B & 17,64 & 14,63 & 20,27 & 30,19 & 17,27 & 100,00 \\ 
+18ª CE & E & 18,22 & 21,92 & 19,18 & 17,13 & 23,56 & 100,00 \\ 
+19ª CE & A & 15,00 & 23,56 & 20,53 & 20,49 & 20,43 & 100,00 \\ 
+20ª CE & E & 21,91 & 18,65 & 19,96 & 18,47 & 21,01 & 100,00 \\ 
+21ª CE & A & 15,92 & 13,18 & 22,80 & 20,13 & 27,98 & 100,00 \\ 
+22ª CE & C & 16,26 & 18,00 & 18,95 & 17,78 & 29,01 & 100,00 \\ 
+23ª CE & B & 21,74 & 13,11 & 22,61 & 18,81 & 23,74 & 100,00 \\ 
+24ª CE & D & 26,47 & 22,54 & 15,82 & 20,61 & 14,56 & 100,00 \\ 
+25ª CE & C & 24,99 & 12,81 & 25,07 & 20,79 & 16,34 & 100,00 \\ 
+26ª CE & C & 16,93 & 27,48 & 17,92 & 22,58 & 15,10 & 100,00 \\ 
+27ª CE & C & 14,75 & 20,74 & 19,56 & 30,69 & 14,26 & 100,00 \\ 
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+FG: Formação Geral; CE: Componente Específico.\\
+\end{minipage}
+
+}
+
+\end{table}%
+
+\subsection{Tabela de Proporção de Acertos
+(\%)}\label{tabela-de-proporuxe7uxe3o-de-acertos}
+
+Veja, a seguir, a Tabela~\ref{tbl-PROP_HITS}. Que apresenta as
+proporções de acertos para cada item.
+
+\begin{table}
+
+\caption{\label{tbl-PROP_HITS}Proporção de Acertos dos Itens.}
+
+\centering{
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}ccc}
+\toprule
+\textbf{Item Especificado} & \textbf{Gabarito} & \textbf{Proporção de Acertos (\%)} \\ 
+\midrule\addlinespace[2.5pt]
+1ª FG & C & 19,77 \\ 
+2ª FG & C & 54,28 \\ 
+3ª FG & B & 35,34 \\ 
+4ª FG & B & 65,74 \\ 
+5ª FG & C & 59,43 \\ 
+6ª FG & E & 85,58 \\ 
+7ª FG & A & 35,09 \\ 
+8ª FG & D & 49,45 \\ 
+1ª CE & C & 10,32 \\ 
+2ª CE & E & 15,74 \\ 
+3ª CE & A & 24,14 \\ 
+4ª CE & C & 21,29 \\ 
+5ª CE & E & 26,13 \\ 
+6ª CE & ANULADA (E) & NA \\ 
+7ª CE & A & 12,24 \\ 
+8ª CE & D & 23,19 \\ 
+9ª CE & B & 18,31 \\ 
+10ª CE & B & 29,59 \\ 
+11ª CE & B & 21,35 \\ 
+12ª CE & E & 18,45 \\ 
+13ª CE & B & 18,61 \\ 
+14ª CE & D & 15,57 \\ 
+15ª CE & D & 30,04 \\ 
+16ª CE & B & 13,86 \\ 
+17ª CE & B & 14,63 \\ 
+18ª CE & E & 23,56 \\ 
+19ª CE & A & 15,00 \\ 
+20ª CE & E & 21,01 \\ 
+21ª CE & A & 15,92 \\ 
+22ª CE & C & 18,95 \\ 
+23ª CE & B & 13,11 \\ 
+24ª CE & D & 20,61 \\ 
+25ª CE & C & 25,07 \\ 
+26ª CE & C & 17,92 \\ 
+27ª CE & C & 19,56 \\ 
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+FG: Formação Geral; CE: Componente Específico.\\
+\end{minipage}
+
+}
+
+\end{table}%
+
+\subsection{Histograma do Escore em Formação Geral, Componentes
+Específicos e
+Total}\label{histograma-do-escore-em-formauxe7uxe3o-geral-componentes-especuxedficos-e-total}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-HIST_SCORE_FG-1.pdf}}
+
+}
+
+\caption{\label{fig-HIST_SCORE_FG}Histograma dos Escore dos
+Participantes em Formação Geral.}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-HIST_SCORE_CE-1.pdf}}
+
+}
+
+\caption{\label{fig-HIST_SCORE_CE}Histograma dos Escore dos
+Participantes em Componentes Específicos.}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-HIST_SCORE_TOTAL-1.pdf}}
+
+}
+
+\caption{\label{fig-HIST_SCORE_TOTAL}Histograma dos Escore Total dos
+Participantes.}
+
+\end{figure}%
+
+\subsection{\texorpdfstring{Proporção de Acertos \emph{versus} Escore
+por
+Item}{Proporção de Acertos versus Escore por Item}}\label{proporuxe7uxe3o-de-acertos-versus-escore-por-item}
+
+O objetivo desta análise é avaliar a \emph{Proporção de Acertos} por
+\emph{Escore} de cada item.
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5} apresenta a
+proporção de acertos por escore para os itens de 1 (1º FG) a 5 (5º FG).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5}Proporção de
+Acertos por Escore dos Itens de 1 (1º FG) a 5 (5º FG) da Prova do ENADE
+para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10} apresenta a
+proporção de acertos por escore para os itens de 6 (6º FG) a 10 (2º CE).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10}Proporção de
+Acertos por Escore dos Itens de 6 (6º FG) a 10 (2º CE) da Prova do ENADE
+para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15} apresenta a
+proporção de acertos por escore para os itens de 11 (3º CE) a 15 (7º
+CE).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15}Proporção de
+Acertos por Escore dos Itens de 11 (3º CE) a 15 (7º CE) da Prova do
+ENADE para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20} apresenta a
+proporção de acertos por escore para os itens de 16 (8º CE) a 20 (12º
+CE).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20}Proporção de
+Acertos por Escore dos Itens de 16 (8º CE) a 20 (12º CE) da Prova do
+ENADE para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25} apresenta a
+proporção de acertos por escore para os itens de 21 (13º CE) a 25 (17º
+CE).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25}Proporção de
+Acertos por Escore dos Itens de 21 (13º CE) a 25 (17º CE) da Prova do
+ENADE para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30} apresenta a
+proporção de acertos por escore para os itens de 26 (18º CE) a 30 (22º
+CE).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30}Proporção de
+Acertos por Escore dos Itens de 26 (18º CE) a 30 (22º CE) da Prova do
+ENADE para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+A Figura~\ref{fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35} apresenta a
+proporção de acertos por escore para os itens de 31 (23º CE) a 35 (27º
+CE).
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{ANALYSIS_BY_COURSE/SISTEMAS_INFO_files/figure-pdf/fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35-1.pdf}}
+
+}
+
+\caption{\label{fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35}Proporção de
+Acertos por Escore dos Itens de 31 (23º CE) a 35 (27º CE) da Prova do
+ENADE para o Curso de Sitemas de Informação.}
+
+\end{figure}%
+
+\subsection{Grupos de Desempenho}\label{grupos-de-desempenho}
+
+Com base na distribuição dos escores totais, os pontos de corte foram
+definidos nos percentis 33\% (\(\approx 1/3\) - PI) e 67\%
+(\(\approx 2/3\) - PS). Assim, os participantes foram agrupados em três
+níveis de desempenho:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Grupo 1 (Baixo Desempenho):} pontuação inferior a \textbf{7};
+\item
+  \textbf{Grupo 2 (Médio Desempenho):} pontuação entre \textbf{7} e
+  \textbf{10};
+\item
+  \textbf{Grupo 3 (Alto Desempenho):} pontuação maior ou igual a
+  \textbf{10}.
+\end{itemize}
+
+Essa segmentação é útil para analisar se os itens da prova conseguem
+diferenciar bem os candidatos (discriminação), além de ajudar a
+identificar questões que são muito fáceis, muito difíceis ou que não
+discriminam.
+
+Posteriormente, essa divisão permitirá calcular indicadores como
+\textbf{discriminação clássica} (diferença entre proporções de acerto
+nos Grupos 3 e 1) e \textbf{ponto bisserial}.
+
+Veja a Tabela~\ref{tbl-DIV_GROUP_DISCR}, que apresenta como ficou a
+divisão dos dados por meio de frequências absolutas e relativas
+
+\begin{table}
+
+\caption{\label{tbl-DIV_GROUP_DISCR}Frequência dos Grupos de Desempenho
+da Prova do ENADE para o Curso de Sitemas de Informação.}
+
+\centering{
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|rr}
+\toprule
+ & \textbf{Frquência} & \textbf{Percentual} \\ 
+\midrule\addlinespace[2.5pt]
+Grupo 1 & 3.624 & 24,18 \\ 
+Grupo 2 & 5.689 & 37,95 \\ 
+Grupo 3 & 5.677 & 37,87 \\ 
+\bottomrule
+\end{tabular*}
+
+}
+
+\end{table}%
+
+\section{Análise via Teoria de Resposta ao Item
+(TRI)}\label{anuxe1lise-via-teoria-de-resposta-ao-item-tri}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Referências}\label{referuxeancias}
+\addcontentsline{toc}{chapter}{Referências}
+
+\markboth{Referências}{Referências}
+
+\phantomsection\label{refs}
+
+
+
+
+\end{document}

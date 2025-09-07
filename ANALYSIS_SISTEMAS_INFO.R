@@ -356,7 +356,7 @@ for (k in 1:n.itens.CE) {
 score.FG <- rowSums(matrix.hits[, 1:n.itens.FG], na.rm = T)
 
 # Escore CE
-score.FG <- rowSums(matrix.hits[, (1 + n.itens.FG):(n.itens)], na.rm = T)
+score.CE <- rowSums(matrix.hits[, (n.itens.FG+1):(n.itens)], na.rm = T)
 
 # Escore Total
 score.tot <- rowSums(matrix.hits, na.rm = T)
@@ -399,20 +399,20 @@ ggplot(data = NULL) +
   )
 
 # -------------------------------------
-# [3.3] PROPORÇÃO DE ACERTOS POR ESCORE
+# [3.4] PROPORÇÃO DE ACERTOS POR ESCORE
 # -------------------------------------
 
 # Converter para Data Drame
 df.hits <- as.data.frame(matrix.hits)
 
 # Nome dos Itens
-name.itens <- paste0("ITEM_", 91:(90 + n.itens))
+# index <- index
 
-# Ajustar o nome das colunas com o `name.itens`
-colnames(df.hits) <- name.itens
+# Ajustar o nome das colunas com o `index`
+colnames(df.hits) <- index
 
 # Adiciona `score_total` à base
-df.hits$SCORE <- score_total
+df.hits$SCORE <- score.tot
 
 # Função para calcular proporção de acertos por escore para cada item
 get.curves_by_item <- function(data, itens_ids) {
@@ -435,26 +435,241 @@ get.curves_by_item <- function(data, itens_ids) {
   return(curves)
 }
 
-# Variável auxiliar
-id.itens_group <- seq(1, n.itens, by = 10)
+# ----------------------
+# [3.4.1] ITENS DE 1 A 5
+# ----------------------
 
-# Plotar os Curvas em Grupos de 10 Itens
-for (i in id.itens_group) {
-  # Grupo de Itens
-  itens_group <- name.itens[i:min(i+9, n.itens)]
+# Itens
+itens1 <- 1:5
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p1 <- get.curves_by_item(df.hits, index[itens1]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens1[1]], " A ", index[itens1[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p1
+print(p1)
+
+# -----------------------
+# [3.4.2] ITENS DE 6 A 10
+# -----------------------
+
+# Itens
+itens2 <- 6:10
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p2 <- get.curves_by_item(df.hits, index[itens2]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens2[1]], " A ", index[itens2[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p2
+print(p2)
+
+# ------------------------
+# [3.4.3] ITENS DE 11 A 15
+# ------------------------
+
+# Itens
+itens3 <- 11:15
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p3 <- get.curves_by_item(df.hits, index[itens3]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens3[1]], " A ", index[itens3[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p3
+print(p3)
+
+# ------------------------
+# [3.4.4] ITENS DE 16 A 20
+# ------------------------
+
+# Itens
+itens4 <- 16:20
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p4 <- get.curves_by_item(df.hits, index[itens4]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens4[1]], " A ", index[itens4[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p4
+print(p4)
+
+# ------------------------
+# [3.4.5] ITENS DE 21 A 25
+# ------------------------
+
+# Itens
+itens5 <- 21:25
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p5 <- get.curves_by_item(df.hits, index[itens5]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens5[1]], " A ", index[itens5[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p5
+print(p5)
+
+# ------------------------
+# [3.4.6] ITENS DE 26 A 30
+# ------------------------
+
+# Itens
+itens6 <- 26:30
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p6 <- get.curves_by_item(df.hits, index[itens6]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens6[1]], " A ", index[itens6[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p6
+print(p6)
+
+# ------------------------
+# [3.4.7] ITENS DE 31 A 35
+# ------------------------
+
+# Itens
+itens7 <- 31:35
+
+# Itens de 1 (1º FG) a 5 (5º FG)
+p7 <- get.curves_by_item(df.hits, index[itens7]) %>%
+  ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
+  geom_line(size = 1) + geom_point() +
+  xlim(0, n.itens) + ylim(0, 1) +
+  labs(
+    x = "Escore",
+    y = "Proporção de Acertos (%)",
+    color = paste0("ITENS ", index[itens7[1]], " A ", index[itens7[5]]),
+    
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# Imprimir p7
+print(p7)
+
+# ------------------------
+# [3.4.8] VERSÃO OTIMIZADA
+# ------------------------
+
+# Variável auxiliar
+id.itens_group <- seq(1, n.itens, by = 5)
+
+# Plotar os Curvas em Grupos de 5 Itens
+for (j in id.itens_group) {
+  # Grupo de Itens (Sua lógica robusta já está aqui)
+  itens_group <- index[j:min(j+4, n.itens)]
   
   # Data Frame que será usado no Gráfico
   df.plot <- get.curves_by_item(df.hits, itens_group)
   
   # Gráfico com ggplot2
-  p <- ggplot(data = df.plot, aes(x = SCORE, PROP_HIT, color = ITEM)) +
-    geom_line(size = 1) + geom_point() +
-    xlim(0, 45) + ylim(0, 1) +
+  p <- ggplot(data = df.plot, aes(x = SCORE, y = PROP_HIT, color = ITEM)) +
+    geom_line(linewidth = 1) + 
+    geom_point() +
+    xlim(0, n.itens) + 
+    ylim(0, 1) +
     labs(
       x = "Escore",
       y = "Proporção de Acertos (%)",
-      color = paste0("ITENS ", i+90, " A ", min(i+9+90, n.itens+90)),
-      
+      color = paste0("ITENS ", itens_group[1], " A ", itens_group[length(itens_group)])
     ) +
     theme_classic(base_size = 12) +
     theme(
@@ -469,17 +684,39 @@ for (i in id.itens_group) {
   print(p)
 }
 
+# --------------------------
+# [3.5] GRUPOS DE DESEMPENHO
+# --------------------------
 
+# Calculando P1 (percentil 33%) e P3 (percentil 67%)
+q1 <- quantile(df.hits$SCORE, probs = 1/3, na.rm = TRUE)
+q3 <- quantile(df.hits$SCORE, probs = 2/3, na.rm = TRUE)
 
+# Exibir os valores
+q1; q3
 
+# Criar variável de Grupo com base nas pontuações
+df.hits$GRUPO <- cut(
+  df.hits$SCORE,
+  breaks = c(-Inf, q1, q3, Inf),
+  labels = c("GRUPO 1","GRUPO 2", "GRUPO 3"),
+  include.lowest = TRUE,
+  right = FALSE
+)
 
+# Armazenar os Resultados no Formato de Data Frame
+tbl.div_group <- data.frame(
+  FREQ = as.numeric(table(df.hits$GRUPO)),
+  PERCENT = as.numeric(prop.table(table(df.hits$GRUPO))) * 100
+)
 
+# Ajuste do Nome das Linhas
+row.names(tbl.div_group) <- str_to_title(c("GRUPO 1","GRUPO 2", "GRUPO 3"))
 
-
-
-
-
-
-
-
-
+# Visualizar 
+gt(tbl.div_group, rownames_to_stub = T) %>%
+  cols_label(
+    FREQ = md("**Frquência**"), PERCENT = md("**Percentual**")
+  ) %>%
+  fmt_number(columns = FREQ, decimals = 0, sep_mark = ".") %>%
+  fmt_number(columns = PERCENT, decimals = 2, dec_mark = ",")
