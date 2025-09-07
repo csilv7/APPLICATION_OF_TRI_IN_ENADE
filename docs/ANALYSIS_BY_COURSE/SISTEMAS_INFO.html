@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -203,6 +232,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tabela-de-frequência-absoluta-e-relativa-das-alternativas-de-respostas" id="toc-tabela-de-frequência-absoluta-e-relativa-das-alternativas-de-respostas" class="nav-link" data-scroll-target="#tabela-de-frequência-absoluta-e-relativa-das-alternativas-de-respostas"><span class="header-section-number">1.3.1</span> Tabela de Frequência (Absoluta e Relativa) das Alternativas de Respostas</a></li>
   <li><a href="#tabela-de-proporção-de-acertos" id="toc-tabela-de-proporção-de-acertos" class="nav-link" data-scroll-target="#tabela-de-proporção-de-acertos"><span class="header-section-number">1.3.2</span> Tabela de Proporção de Acertos (%)</a></li>
   <li><a href="#histograma-do-escore-em-formação-geral-componentes-específicos-e-total" id="toc-histograma-do-escore-em-formação-geral-componentes-específicos-e-total" class="nav-link" data-scroll-target="#histograma-do-escore-em-formação-geral-componentes-específicos-e-total"><span class="header-section-number">1.3.3</span> Histograma do Escore em Formação Geral, Componentes Específicos e Total</a></li>
+  <li><a href="#proporção-de-acertos-versus-escore-por-item" id="toc-proporção-de-acertos-versus-escore-por-item" class="nav-link" data-scroll-target="#proporção-de-acertos-versus-escore-por-item"><span class="header-section-number">1.3.4</span> Proporção de Acertos <em>versus</em> Escore por Item</a></li>
+  <li><a href="#grupos-de-desempenho" id="toc-grupos-de-desempenho" class="nav-link" data-scroll-target="#grupos-de-desempenho"><span class="header-section-number">1.3.5</span> Grupos de Desempenho</a></li>
   </ul></li>
   <li><a href="#análise-via-teoria-de-resposta-ao-item-tri" id="toc-análise-via-teoria-de-resposta-ao-item-tri" class="nav-link" data-scroll-target="#análise-via-teoria-de-resposta-ao-item-tri"><span class="header-section-number">1.4</span> Análise via Teoria de Resposta ao Item (TRI)</a></li>
   </ul>
@@ -254,23 +285,23 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
 </figcaption>
 <div aria-describedby="tbl-FREQ_ALTERNATIVE_ABS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="srlyffkjqe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#srlyffkjqe table {
+<div id="loggubsctg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#loggubsctg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#srlyffkjqe thead, #srlyffkjqe tbody, #srlyffkjqe tfoot, #srlyffkjqe tr, #srlyffkjqe td, #srlyffkjqe th {
+#loggubsctg thead, #loggubsctg tbody, #loggubsctg tfoot, #loggubsctg tr, #loggubsctg td, #loggubsctg th {
   border-style: none;
 }
 
-#srlyffkjqe p {
+#loggubsctg p {
   margin: 0;
   padding: 0;
 }
 
-#srlyffkjqe .gt_table {
+#loggubsctg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -296,12 +327,12 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-left-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_caption {
+#loggubsctg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#srlyffkjqe .gt_title {
+#loggubsctg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -313,7 +344,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-bottom-width: 0;
 }
 
-#srlyffkjqe .gt_subtitle {
+#loggubsctg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -325,7 +356,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-top-width: 0;
 }
 
-#srlyffkjqe .gt_heading {
+#loggubsctg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -337,13 +368,13 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_bottom_border {
+#loggubsctg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_col_headings {
+#loggubsctg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -358,7 +389,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_col_heading {
+#loggubsctg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -378,7 +409,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   overflow-x: hidden;
 }
 
-#srlyffkjqe .gt_column_spanner_outer {
+#loggubsctg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -390,15 +421,15 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   padding-right: 4px;
 }
 
-#srlyffkjqe .gt_column_spanner_outer:first-child {
+#loggubsctg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#srlyffkjqe .gt_column_spanner_outer:last-child {
+#loggubsctg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#srlyffkjqe .gt_column_spanner {
+#loggubsctg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -410,11 +441,11 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   width: 100%;
 }
 
-#srlyffkjqe .gt_spanner_row {
+#loggubsctg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#srlyffkjqe .gt_group_heading {
+#loggubsctg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -440,7 +471,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   text-align: left;
 }
 
-#srlyffkjqe .gt_empty_group_heading {
+#loggubsctg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -455,15 +486,15 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   vertical-align: middle;
 }
 
-#srlyffkjqe .gt_from_md > :first-child {
+#loggubsctg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#srlyffkjqe .gt_from_md > :last-child {
+#loggubsctg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#srlyffkjqe .gt_row {
+#loggubsctg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -482,7 +513,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   overflow-x: hidden;
 }
 
-#srlyffkjqe .gt_stub {
+#loggubsctg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -495,7 +526,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#srlyffkjqe .gt_stub_row_group {
+#loggubsctg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -509,15 +540,15 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   vertical-align: top;
 }
 
-#srlyffkjqe .gt_row_group_first td {
+#loggubsctg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#srlyffkjqe .gt_row_group_first th {
+#loggubsctg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#srlyffkjqe .gt_summary_row {
+#loggubsctg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -527,16 +558,16 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#srlyffkjqe .gt_first_summary_row {
+#loggubsctg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_first_summary_row.thick {
+#loggubsctg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#srlyffkjqe .gt_last_summary_row {
+#loggubsctg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -546,7 +577,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-bottom-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_grand_summary_row {
+#loggubsctg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -556,7 +587,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#srlyffkjqe .gt_first_grand_summary_row {
+#loggubsctg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -566,7 +597,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-top-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_last_grand_summary_row_top {
+#loggubsctg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -576,11 +607,11 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-bottom-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_striped {
+#loggubsctg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#srlyffkjqe .gt_table_body {
+#loggubsctg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -589,7 +620,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-bottom-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_footnotes {
+#loggubsctg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -603,7 +634,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_footnote {
+#loggubsctg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -612,7 +643,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#srlyffkjqe .gt_sourcenotes {
+#loggubsctg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -626,7 +657,7 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#srlyffkjqe .gt_sourcenote {
+#loggubsctg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -634,72 +665,72 @@ Tabela&nbsp;1.1: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#srlyffkjqe .gt_left {
+#loggubsctg .gt_left {
   text-align: left;
 }
 
-#srlyffkjqe .gt_center {
+#loggubsctg .gt_center {
   text-align: center;
 }
 
-#srlyffkjqe .gt_right {
+#loggubsctg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#srlyffkjqe .gt_font_normal {
+#loggubsctg .gt_font_normal {
   font-weight: normal;
 }
 
-#srlyffkjqe .gt_font_bold {
+#loggubsctg .gt_font_bold {
   font-weight: bold;
 }
 
-#srlyffkjqe .gt_font_italic {
+#loggubsctg .gt_font_italic {
   font-style: italic;
 }
 
-#srlyffkjqe .gt_super {
+#loggubsctg .gt_super {
   font-size: 65%;
 }
 
-#srlyffkjqe .gt_footnote_marks {
+#loggubsctg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#srlyffkjqe .gt_asterisk {
+#loggubsctg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#srlyffkjqe .gt_indent_1 {
+#loggubsctg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#srlyffkjqe .gt_indent_2 {
+#loggubsctg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#srlyffkjqe .gt_indent_3 {
+#loggubsctg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#srlyffkjqe .gt_indent_4 {
+#loggubsctg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#srlyffkjqe .gt_indent_5 {
+#loggubsctg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#srlyffkjqe .katex-display {
+#loggubsctg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#srlyffkjqe div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#loggubsctg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1162,23 +1193,23 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
 </figcaption>
 <div aria-describedby="tbl-FREQ_ALTERNATIVE_REL-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="xlxmfsymlu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xlxmfsymlu table {
+<div id="mevmwbgezt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mevmwbgezt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xlxmfsymlu thead, #xlxmfsymlu tbody, #xlxmfsymlu tfoot, #xlxmfsymlu tr, #xlxmfsymlu td, #xlxmfsymlu th {
+#mevmwbgezt thead, #mevmwbgezt tbody, #mevmwbgezt tfoot, #mevmwbgezt tr, #mevmwbgezt td, #mevmwbgezt th {
   border-style: none;
 }
 
-#xlxmfsymlu p {
+#mevmwbgezt p {
   margin: 0;
   padding: 0;
 }
 
-#xlxmfsymlu .gt_table {
+#mevmwbgezt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1204,12 +1235,12 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-left-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_caption {
+#mevmwbgezt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xlxmfsymlu .gt_title {
+#mevmwbgezt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1221,7 +1252,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-bottom-width: 0;
 }
 
-#xlxmfsymlu .gt_subtitle {
+#mevmwbgezt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1233,7 +1264,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-top-width: 0;
 }
 
-#xlxmfsymlu .gt_heading {
+#mevmwbgezt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1245,13 +1276,13 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_bottom_border {
+#mevmwbgezt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_col_headings {
+#mevmwbgezt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1266,7 +1297,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_col_heading {
+#mevmwbgezt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1286,7 +1317,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   overflow-x: hidden;
 }
 
-#xlxmfsymlu .gt_column_spanner_outer {
+#mevmwbgezt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1298,15 +1329,15 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   padding-right: 4px;
 }
 
-#xlxmfsymlu .gt_column_spanner_outer:first-child {
+#mevmwbgezt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xlxmfsymlu .gt_column_spanner_outer:last-child {
+#mevmwbgezt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xlxmfsymlu .gt_column_spanner {
+#mevmwbgezt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1318,11 +1349,11 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   width: 100%;
 }
 
-#xlxmfsymlu .gt_spanner_row {
+#mevmwbgezt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xlxmfsymlu .gt_group_heading {
+#mevmwbgezt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1348,7 +1379,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   text-align: left;
 }
 
-#xlxmfsymlu .gt_empty_group_heading {
+#mevmwbgezt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1363,15 +1394,15 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   vertical-align: middle;
 }
 
-#xlxmfsymlu .gt_from_md > :first-child {
+#mevmwbgezt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xlxmfsymlu .gt_from_md > :last-child {
+#mevmwbgezt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xlxmfsymlu .gt_row {
+#mevmwbgezt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1390,7 +1421,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   overflow-x: hidden;
 }
 
-#xlxmfsymlu .gt_stub {
+#mevmwbgezt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1403,7 +1434,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#xlxmfsymlu .gt_stub_row_group {
+#mevmwbgezt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1417,15 +1448,15 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   vertical-align: top;
 }
 
-#xlxmfsymlu .gt_row_group_first td {
+#mevmwbgezt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xlxmfsymlu .gt_row_group_first th {
+#mevmwbgezt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xlxmfsymlu .gt_summary_row {
+#mevmwbgezt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1435,16 +1466,16 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#xlxmfsymlu .gt_first_summary_row {
+#mevmwbgezt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_first_summary_row.thick {
+#mevmwbgezt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xlxmfsymlu .gt_last_summary_row {
+#mevmwbgezt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1454,7 +1485,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-bottom-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_grand_summary_row {
+#mevmwbgezt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1464,7 +1495,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#xlxmfsymlu .gt_first_grand_summary_row {
+#mevmwbgezt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1474,7 +1505,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-top-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_last_grand_summary_row_top {
+#mevmwbgezt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1484,11 +1515,11 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-bottom-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_striped {
+#mevmwbgezt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xlxmfsymlu .gt_table_body {
+#mevmwbgezt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1497,7 +1528,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-bottom-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_footnotes {
+#mevmwbgezt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1511,7 +1542,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_footnote {
+#mevmwbgezt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1520,7 +1551,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#xlxmfsymlu .gt_sourcenotes {
+#mevmwbgezt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1534,7 +1565,7 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   border-right-color: #D3D3D3;
 }
 
-#xlxmfsymlu .gt_sourcenote {
+#mevmwbgezt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1542,72 +1573,72 @@ Tabela&nbsp;1.2: Frequências das Alternativas de Respostas por Item.
   padding-right: 5px;
 }
 
-#xlxmfsymlu .gt_left {
+#mevmwbgezt .gt_left {
   text-align: left;
 }
 
-#xlxmfsymlu .gt_center {
+#mevmwbgezt .gt_center {
   text-align: center;
 }
 
-#xlxmfsymlu .gt_right {
+#mevmwbgezt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xlxmfsymlu .gt_font_normal {
+#mevmwbgezt .gt_font_normal {
   font-weight: normal;
 }
 
-#xlxmfsymlu .gt_font_bold {
+#mevmwbgezt .gt_font_bold {
   font-weight: bold;
 }
 
-#xlxmfsymlu .gt_font_italic {
+#mevmwbgezt .gt_font_italic {
   font-style: italic;
 }
 
-#xlxmfsymlu .gt_super {
+#mevmwbgezt .gt_super {
   font-size: 65%;
 }
 
-#xlxmfsymlu .gt_footnote_marks {
+#mevmwbgezt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xlxmfsymlu .gt_asterisk {
+#mevmwbgezt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xlxmfsymlu .gt_indent_1 {
+#mevmwbgezt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xlxmfsymlu .gt_indent_2 {
+#mevmwbgezt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xlxmfsymlu .gt_indent_3 {
+#mevmwbgezt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xlxmfsymlu .gt_indent_4 {
+#mevmwbgezt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xlxmfsymlu .gt_indent_5 {
+#mevmwbgezt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xlxmfsymlu .katex-display {
+#mevmwbgezt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xlxmfsymlu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mevmwbgezt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2002,23 +2033,23 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
 </figcaption>
 <div aria-describedby="tbl-PROP_HITS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ybwqwljchu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ybwqwljchu table {
+<div id="epkfxghbkw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#epkfxghbkw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ybwqwljchu thead, #ybwqwljchu tbody, #ybwqwljchu tfoot, #ybwqwljchu tr, #ybwqwljchu td, #ybwqwljchu th {
+#epkfxghbkw thead, #epkfxghbkw tbody, #epkfxghbkw tfoot, #epkfxghbkw tr, #epkfxghbkw td, #epkfxghbkw th {
   border-style: none;
 }
 
-#ybwqwljchu p {
+#epkfxghbkw p {
   margin: 0;
   padding: 0;
 }
 
-#ybwqwljchu .gt_table {
+#epkfxghbkw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2044,12 +2075,12 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-left-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_caption {
+#epkfxghbkw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ybwqwljchu .gt_title {
+#epkfxghbkw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2061,7 +2092,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-bottom-width: 0;
 }
 
-#ybwqwljchu .gt_subtitle {
+#epkfxghbkw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2073,7 +2104,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-top-width: 0;
 }
 
-#ybwqwljchu .gt_heading {
+#epkfxghbkw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2085,13 +2116,13 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-right-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_bottom_border {
+#epkfxghbkw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_col_headings {
+#epkfxghbkw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2106,7 +2137,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-right-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_col_heading {
+#epkfxghbkw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2126,7 +2157,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   overflow-x: hidden;
 }
 
-#ybwqwljchu .gt_column_spanner_outer {
+#epkfxghbkw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2138,15 +2169,15 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   padding-right: 4px;
 }
 
-#ybwqwljchu .gt_column_spanner_outer:first-child {
+#epkfxghbkw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ybwqwljchu .gt_column_spanner_outer:last-child {
+#epkfxghbkw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ybwqwljchu .gt_column_spanner {
+#epkfxghbkw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2158,11 +2189,11 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   width: 100%;
 }
 
-#ybwqwljchu .gt_spanner_row {
+#epkfxghbkw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ybwqwljchu .gt_group_heading {
+#epkfxghbkw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2188,7 +2219,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   text-align: left;
 }
 
-#ybwqwljchu .gt_empty_group_heading {
+#epkfxghbkw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2203,15 +2234,15 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   vertical-align: middle;
 }
 
-#ybwqwljchu .gt_from_md > :first-child {
+#epkfxghbkw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ybwqwljchu .gt_from_md > :last-child {
+#epkfxghbkw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ybwqwljchu .gt_row {
+#epkfxghbkw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2230,7 +2261,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   overflow-x: hidden;
 }
 
-#ybwqwljchu .gt_stub {
+#epkfxghbkw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2243,7 +2274,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   padding-right: 5px;
 }
 
-#ybwqwljchu .gt_stub_row_group {
+#epkfxghbkw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2257,15 +2288,15 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   vertical-align: top;
 }
 
-#ybwqwljchu .gt_row_group_first td {
+#epkfxghbkw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ybwqwljchu .gt_row_group_first th {
+#epkfxghbkw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ybwqwljchu .gt_summary_row {
+#epkfxghbkw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2275,16 +2306,16 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   padding-right: 5px;
 }
 
-#ybwqwljchu .gt_first_summary_row {
+#epkfxghbkw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_first_summary_row.thick {
+#epkfxghbkw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ybwqwljchu .gt_last_summary_row {
+#epkfxghbkw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2294,7 +2325,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-bottom-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_grand_summary_row {
+#epkfxghbkw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2304,7 +2335,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   padding-right: 5px;
 }
 
-#ybwqwljchu .gt_first_grand_summary_row {
+#epkfxghbkw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2314,7 +2345,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-top-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_last_grand_summary_row_top {
+#epkfxghbkw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2324,11 +2355,11 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-bottom-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_striped {
+#epkfxghbkw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ybwqwljchu .gt_table_body {
+#epkfxghbkw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2337,7 +2368,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-bottom-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_footnotes {
+#epkfxghbkw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2351,7 +2382,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-right-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_footnote {
+#epkfxghbkw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2360,7 +2391,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   padding-right: 5px;
 }
 
-#ybwqwljchu .gt_sourcenotes {
+#epkfxghbkw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2374,7 +2405,7 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   border-right-color: #D3D3D3;
 }
 
-#ybwqwljchu .gt_sourcenote {
+#epkfxghbkw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2382,72 +2413,72 @@ Tabela&nbsp;1.3: Proporção de Acertos dos Itens.
   padding-right: 5px;
 }
 
-#ybwqwljchu .gt_left {
+#epkfxghbkw .gt_left {
   text-align: left;
 }
 
-#ybwqwljchu .gt_center {
+#epkfxghbkw .gt_center {
   text-align: center;
 }
 
-#ybwqwljchu .gt_right {
+#epkfxghbkw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ybwqwljchu .gt_font_normal {
+#epkfxghbkw .gt_font_normal {
   font-weight: normal;
 }
 
-#ybwqwljchu .gt_font_bold {
+#epkfxghbkw .gt_font_bold {
   font-weight: bold;
 }
 
-#ybwqwljchu .gt_font_italic {
+#epkfxghbkw .gt_font_italic {
   font-style: italic;
 }
 
-#ybwqwljchu .gt_super {
+#epkfxghbkw .gt_super {
   font-size: 65%;
 }
 
-#ybwqwljchu .gt_footnote_marks {
+#epkfxghbkw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ybwqwljchu .gt_asterisk {
+#epkfxghbkw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ybwqwljchu .gt_indent_1 {
+#epkfxghbkw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ybwqwljchu .gt_indent_2 {
+#epkfxghbkw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ybwqwljchu .gt_indent_3 {
+#epkfxghbkw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ybwqwljchu .gt_indent_4 {
+#epkfxghbkw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ybwqwljchu .gt_indent_5 {
+#epkfxghbkw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ybwqwljchu .katex-display {
+#epkfxghbkw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ybwqwljchu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#epkfxghbkw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2693,6 +2724,618 @@ Figura&nbsp;1.3: Histograma dos Escore Total dos Participantes.
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+</section>
+<section id="proporção-de-acertos-versus-escore-por-item" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="proporção-de-acertos-versus-escore-por-item"><span class="header-section-number">1.3.4</span> Proporção de Acertos <em>versus</em> Escore por Item</h3>
+<p>O objetivo desta análise é avaliar a <em>Proporção de Acertos</em> por <em>Escore</em> de cada item.</p>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5" class="quarto-xref">Figura&nbsp;<span>1.4</span></a> apresenta a proporção de acertos por escore para os itens de 1 (1º FG) a 5 (5º FG).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.4: Proporção de Acertos por Escore dos Itens de 1 (1º FG) a 5 (5º FG) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10" class="quarto-xref">Figura&nbsp;<span>1.5</span></a> apresenta a proporção de acertos por escore para os itens de 6 (6º FG) a 10 (2º CE).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.5: Proporção de Acertos por Escore dos Itens de 6 (6º FG) a 10 (2º CE) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15" class="quarto-xref">Figura&nbsp;<span>1.6</span></a> apresenta a proporção de acertos por escore para os itens de 11 (3º CE) a 15 (7º CE).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.6: Proporção de Acertos por Escore dos Itens de 11 (3º CE) a 15 (7º CE) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20" class="quarto-xref">Figura&nbsp;<span>1.7</span></a> apresenta a proporção de acertos por escore para os itens de 16 (8º CE) a 20 (12º CE).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.7: Proporção de Acertos por Escore dos Itens de 16 (8º CE) a 20 (12º CE) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25" class="quarto-xref">Figura&nbsp;<span>1.8</span></a> apresenta a proporção de acertos por escore para os itens de 21 (13º CE) a 25 (17º CE).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.8: Proporção de Acertos por Escore dos Itens de 21 (13º CE) a 25 (17º CE) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30" class="quarto-xref">Figura&nbsp;<span>1.9</span></a> apresenta a proporção de acertos por escore para os itens de 26 (18º CE) a 30 (22º CE).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.9: Proporção de Acertos por Escore dos Itens de 26 (18º CE) a 30 (22º CE) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <a href="#fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35" class="quarto-xref">Figura&nbsp;<span>1.10</span></a> apresenta a proporção de acertos por escore para os itens de 31 (23º CE) a 35 (27º CE).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SISTEMAS_INFO_files/figure-html/fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.10: Proporção de Acertos por Escore dos Itens de 31 (23º CE) a 35 (27º CE) da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="grupos-de-desempenho" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="grupos-de-desempenho"><span class="header-section-number">1.3.5</span> Grupos de Desempenho</h3>
+<p>Com base na distribuição dos escores totais, os pontos de corte foram definidos nos percentis 33% (<span class="math inline">\(\approx 1/3\)</span> - PI) e 67% (<span class="math inline">\(\approx 2/3\)</span> - PS). Assim, os participantes foram agrupados em três níveis de desempenho:</p>
+<ul>
+<li><strong>Grupo 1 (Baixo Desempenho):</strong> pontuação inferior a <strong>7</strong>;</li>
+<li><strong>Grupo 2 (Médio Desempenho):</strong> pontuação entre <strong>7</strong> e <strong>10</strong>;</li>
+<li><strong>Grupo 3 (Alto Desempenho):</strong> pontuação maior ou igual a <strong>10</strong>.</li>
+</ul>
+<p>Essa segmentação é útil para analisar se os itens da prova conseguem diferenciar bem os candidatos (discriminação), além de ajudar a identificar questões que são muito fáceis, muito difíceis ou que não discriminam.</p>
+<p>Posteriormente, essa divisão permitirá calcular indicadores como <strong>discriminação clássica</strong> (diferença entre proporções de acerto nos Grupos 3 e 1) e <strong>ponto bisserial</strong>.</p>
+<p>Veja a <a href="#tbl-DIV_GROUP_DISCR" class="quarto-xref">Tabela&nbsp;<span>1.4</span></a>, que apresenta como ficou a divisão dos dados por meio de frequências absolutas e relativas</p>
+<div class="cell">
+<div id="tbl-DIV_GROUP_DISCR" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-DIV_GROUP_DISCR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1.4: Frequência dos Grupos de Desempenho da Prova do ENADE para o Curso de Sitemas de Informação.
+</figcaption>
+<div aria-describedby="tbl-DIV_GROUP_DISCR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fzkhflrpsm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fzkhflrpsm table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#fzkhflrpsm thead, #fzkhflrpsm tbody, #fzkhflrpsm tfoot, #fzkhflrpsm tr, #fzkhflrpsm td, #fzkhflrpsm th {
+  border-style: none;
+}
+
+#fzkhflrpsm p {
+  margin: 0;
+  padding: 0;
+}
+
+#fzkhflrpsm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#fzkhflrpsm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fzkhflrpsm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fzkhflrpsm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fzkhflrpsm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fzkhflrpsm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fzkhflrpsm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fzkhflrpsm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fzkhflrpsm .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#fzkhflrpsm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#fzkhflrpsm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fzkhflrpsm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fzkhflrpsm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fzkhflrpsm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fzkhflrpsm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzkhflrpsm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#fzkhflrpsm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#fzkhflrpsm .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#fzkhflrpsm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzkhflrpsm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#fzkhflrpsm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzkhflrpsm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fzkhflrpsm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzkhflrpsm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fzkhflrpsm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzkhflrpsm .gt_left {
+  text-align: left;
+}
+
+#fzkhflrpsm .gt_center {
+  text-align: center;
+}
+
+#fzkhflrpsm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fzkhflrpsm .gt_font_normal {
+  font-weight: normal;
+}
+
+#fzkhflrpsm .gt_font_bold {
+  font-weight: bold;
+}
+
+#fzkhflrpsm .gt_font_italic {
+  font-style: italic;
+}
+
+#fzkhflrpsm .gt_super {
+  font-size: 65%;
+}
+
+#fzkhflrpsm .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#fzkhflrpsm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#fzkhflrpsm .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#fzkhflrpsm .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#fzkhflrpsm .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#fzkhflrpsm .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#fzkhflrpsm .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#fzkhflrpsm .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#fzkhflrpsm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="a::stub" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="FREQ" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col"><strong>Frquência</strong></th>
+<th id="PERCENT" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col"><strong>Percentual</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Grupo 1</td>
+<td class="gt_row gt_right" headers="stub_1_1 FREQ">3.624</td>
+<td class="gt_row gt_right" headers="stub_1_1 PERCENT">24,18</td>
+</tr>
+<tr class="even">
+<td id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Grupo 2</td>
+<td class="gt_row gt_right" headers="stub_1_2 FREQ">5.689</td>
+<td class="gt_row gt_right" headers="stub_1_2 PERCENT">37,95</td>
+</tr>
+<tr class="odd">
+<td id="stub_1_3" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Grupo 3</td>
+<td class="gt_row gt_right" headers="stub_1_3 FREQ">5.677</td>
+<td class="gt_row gt_right" headers="stub_1_3 PERCENT">37,87</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
 </div>
 </div>
 </section>
@@ -3568,7 +4211,7 @@ Figura&nbsp;1.3: Histograma dos Escore Total dos Participantes.
 <span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a>score.FG <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(matrix.hits[, <span class="dv">1</span><span class="sc">:</span>n.itens.FG], <span class="at">na.rm =</span> T)</span>
 <span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a><span class="co"># Escore CE</span></span>
-<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>score.CE <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(matrix.hits[, (<span class="dv">1</span> <span class="sc">+</span> n.itens.FG)<span class="sc">:</span>(n.itens)], <span class="at">na.rm =</span> T)</span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>score.CE <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(matrix.hits[, (n.itens.FG<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(n.itens)], <span class="at">na.rm =</span> T)</span>
 <span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a><span class="co"># Escore Total</span></span>
 <span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a>score.tot <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(matrix.hits, <span class="at">na.rm =</span> T)</span>
@@ -3627,12 +4270,375 @@ Figura&nbsp;1.3: Histograma dos Escore Total dos Participantes.
 <span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a><span class="fu">## Análise via Teoria de Resposta ao Item (TRI)</span></span>
+<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a><span class="fu">### Proporção de Acertos *versus* Escore por Item</span></span>
 <span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
-<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a>:::: {.progress-bar style="width: 100%;"}</span>
-<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: PROP_HITS_AND_SCORE_BY_ITEM</span></span>
+<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------</span></span>
+<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3] PROPORÇÃO DE ACERTOS POR ESCORE</span></span>
+<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------</span></span>
+<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter para Data Drame</span></span>
+<span id="cb1-487"><a href="#cb1-487" aria-hidden="true" tabindex="-1"></a>df.hits <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(matrix.hits)</span>
+<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-489"><a href="#cb1-489" aria-hidden="true" tabindex="-1"></a><span class="co"># Nome dos Itens</span></span>
+<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a><span class="co"># index &lt;- index</span></span>
+<span id="cb1-491"><a href="#cb1-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar o nome das colunas com o `index`</span></span>
+<span id="cb1-493"><a href="#cb1-493" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df.hits) <span class="ot">&lt;-</span> index</span>
+<span id="cb1-494"><a href="#cb1-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-495"><a href="#cb1-495" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona `score_total` à base</span></span>
+<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a>df.hits<span class="sc">$</span>SCORE <span class="ot">&lt;-</span> score.tot</span>
+<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-498"><a href="#cb1-498" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para calcular proporção de acertos por escore para cada item</span></span>
+<span id="cb1-499"><a href="#cb1-499" aria-hidden="true" tabindex="-1"></a>get.curves_by_item <span class="ot">&lt;-</span> <span class="cf">function</span>(data, itens_ids) {</span>
+<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Data Frame para Armazenar Resultados</span></span>
+<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a>  curves <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Iteração de Obtenção dos Dados</span></span>
+<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (item <span class="cf">in</span> itens_ids) {</span>
+<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a>    curve.by.item <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(SCORE) <span class="sc">%&gt;%</span></span>
+<span id="cb1-507"><a href="#cb1-507" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(</span>
+<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a>        <span class="at">PROP_HIT =</span> <span class="fu">mean</span>(<span class="fu">get</span>(item), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-510"><a href="#cb1-510" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">ITEM =</span> item)</span>
+<span id="cb1-511"><a href="#cb1-511" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-512"><a href="#cb1-512" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Join dos Dados</span></span>
+<span id="cb1-513"><a href="#cb1-513" aria-hidden="true" tabindex="-1"></a>    curves <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(curves, curve.by.item)</span>
+<span id="cb1-514"><a href="#cb1-514" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-515"><a href="#cb1-515" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retornar os DadoS</span></span>
+<span id="cb1-516"><a href="#cb1-516" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(curves)</span>
+<span id="cb1-517"><a href="#cb1-517" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-518"><a href="#cb1-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-519"><a href="#cb1-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-520"><a href="#cb1-520" aria-hidden="true" tabindex="-1"></a>O objetivo desta análise é avaliar a *Proporção de Acertos* por *Escore* de cada item.</span>
+<span id="cb1-521"><a href="#cb1-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-522"><a href="#cb1-522" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5 apresenta a proporção de acertos por escore para os itens de 1 (1º FG) a 5 (5º FG).</span>
+<span id="cb1-523"><a href="#cb1-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-526"><a href="#cb1-526" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-527"><a href="#cb1-527" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 1 (1º FG) a 5 (5º FG) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-528"><a href="#cb1-528" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5</span></span>
+<span id="cb1-529"><a href="#cb1-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-530"><a href="#cb1-530" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb1-531"><a href="#cb1-531" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.1] ITENS DE 1 A 5</span></span>
+<span id="cb1-532"><a href="#cb1-532" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb1-533"><a href="#cb1-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-534"><a href="#cb1-534" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-535"><a href="#cb1-535" aria-hidden="true" tabindex="-1"></a>itens1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb1-536"><a href="#cb1-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-537"><a href="#cb1-537" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-538"><a href="#cb1-538" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens1]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-539"><a href="#cb1-539" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-540"><a href="#cb1-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-541"><a href="#cb1-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-542"><a href="#cb1-542" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-543"><a href="#cb1-543" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-544"><a href="#cb1-544" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-545"><a href="#cb1-545" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens1[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens1[<span class="dv">5</span>]]),</span>
+<span id="cb1-546"><a href="#cb1-546" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-547"><a href="#cb1-547" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-548"><a href="#cb1-548" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-549"><a href="#cb1-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-550"><a href="#cb1-550" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-552"><a href="#cb1-552" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p1</span></span>
+<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p1)</span>
+<span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10 apresenta a proporção de acertos por escore para os itens de 6 (6º FG) a 10 (2º CE).</span>
+<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-565"><a href="#cb1-565" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-566"><a href="#cb1-566" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 6 (6º FG) a 10 (2º CE) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10</span></span>
+<span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------</span></span>
+<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.2] ITENS DE 6 A 10</span></span>
+<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------</span></span>
+<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a>itens2 <span class="ot">&lt;-</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens2]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens2[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens2[<span class="dv">5</span>]]),</span>
+<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-593"><a href="#cb1-593" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-594"><a href="#cb1-594" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-596"><a href="#cb1-596" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p2</span></span>
+<span id="cb1-597"><a href="#cb1-597" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p2)</span>
+<span id="cb1-598"><a href="#cb1-598" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-599"><a href="#cb1-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-600"><a href="#cb1-600" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15 apresenta a proporção de acertos por escore para os itens de 11 (3º CE) a 15 (7º CE).</span>
+<span id="cb1-601"><a href="#cb1-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-604"><a href="#cb1-604" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-605"><a href="#cb1-605" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 11 (3º CE) a 15 (7º CE) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-606"><a href="#cb1-606" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15</span></span>
+<span id="cb1-607"><a href="#cb1-607" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-608"><a href="#cb1-608" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-609"><a href="#cb1-609" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.3] ITENS DE 11 A 15</span></span>
+<span id="cb1-610"><a href="#cb1-610" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-611"><a href="#cb1-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-612"><a href="#cb1-612" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-613"><a href="#cb1-613" aria-hidden="true" tabindex="-1"></a>itens3 <span class="ot">&lt;-</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">15</span></span>
+<span id="cb1-614"><a href="#cb1-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-615"><a href="#cb1-615" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-616"><a href="#cb1-616" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens3]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-617"><a href="#cb1-617" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-618"><a href="#cb1-618" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-619"><a href="#cb1-619" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-620"><a href="#cb1-620" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-621"><a href="#cb1-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-622"><a href="#cb1-622" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-623"><a href="#cb1-623" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens3[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens3[<span class="dv">5</span>]]),</span>
+<span id="cb1-624"><a href="#cb1-624" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-625"><a href="#cb1-625" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-626"><a href="#cb1-626" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-627"><a href="#cb1-627" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-628"><a href="#cb1-628" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-629"><a href="#cb1-629" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-630"><a href="#cb1-630" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-631"><a href="#cb1-631" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-632"><a href="#cb1-632" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-633"><a href="#cb1-633" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-634"><a href="#cb1-634" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-635"><a href="#cb1-635" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p3</span></span>
+<span id="cb1-636"><a href="#cb1-636" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p3)</span>
+<span id="cb1-637"><a href="#cb1-637" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-638"><a href="#cb1-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-639"><a href="#cb1-639" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20 apresenta a proporção de acertos por escore para os itens de 16 (8º CE) a 20 (12º CE).</span>
+<span id="cb1-640"><a href="#cb1-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-643"><a href="#cb1-643" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-644"><a href="#cb1-644" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 16 (8º CE) a 20 (12º CE) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-645"><a href="#cb1-645" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20</span></span>
+<span id="cb1-646"><a href="#cb1-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-647"><a href="#cb1-647" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-648"><a href="#cb1-648" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.4] ITENS DE 16 A 20</span></span>
+<span id="cb1-649"><a href="#cb1-649" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-650"><a href="#cb1-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-651"><a href="#cb1-651" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-652"><a href="#cb1-652" aria-hidden="true" tabindex="-1"></a>itens4 <span class="ot">&lt;-</span> <span class="dv">16</span><span class="sc">:</span><span class="dv">20</span></span>
+<span id="cb1-653"><a href="#cb1-653" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-654"><a href="#cb1-654" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-655"><a href="#cb1-655" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens4]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-656"><a href="#cb1-656" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-657"><a href="#cb1-657" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-658"><a href="#cb1-658" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-659"><a href="#cb1-659" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-660"><a href="#cb1-660" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-661"><a href="#cb1-661" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-662"><a href="#cb1-662" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens4[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens4[<span class="dv">5</span>]]),</span>
+<span id="cb1-663"><a href="#cb1-663" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-664"><a href="#cb1-664" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-665"><a href="#cb1-665" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-666"><a href="#cb1-666" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-667"><a href="#cb1-667" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-668"><a href="#cb1-668" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-669"><a href="#cb1-669" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-670"><a href="#cb1-670" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-671"><a href="#cb1-671" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-672"><a href="#cb1-672" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-673"><a href="#cb1-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-674"><a href="#cb1-674" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p4</span></span>
+<span id="cb1-675"><a href="#cb1-675" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p4)</span>
+<span id="cb1-676"><a href="#cb1-676" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-677"><a href="#cb1-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-678"><a href="#cb1-678" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25 apresenta a proporção de acertos por escore para os itens de 21 (13º CE) a 25 (17º CE).</span>
+<span id="cb1-679"><a href="#cb1-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-682"><a href="#cb1-682" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-683"><a href="#cb1-683" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 21 (13º CE) a 25 (17º CE) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-684"><a href="#cb1-684" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25</span></span>
+<span id="cb1-685"><a href="#cb1-685" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-686"><a href="#cb1-686" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-687"><a href="#cb1-687" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.5] ITENS DE 21 A 25</span></span>
+<span id="cb1-688"><a href="#cb1-688" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-689"><a href="#cb1-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-690"><a href="#cb1-690" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-691"><a href="#cb1-691" aria-hidden="true" tabindex="-1"></a>itens5 <span class="ot">&lt;-</span> <span class="dv">21</span><span class="sc">:</span><span class="dv">25</span></span>
+<span id="cb1-692"><a href="#cb1-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-693"><a href="#cb1-693" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-694"><a href="#cb1-694" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens5]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-695"><a href="#cb1-695" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-696"><a href="#cb1-696" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-697"><a href="#cb1-697" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-698"><a href="#cb1-698" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-699"><a href="#cb1-699" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-700"><a href="#cb1-700" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-701"><a href="#cb1-701" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens5[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens5[<span class="dv">5</span>]]),</span>
+<span id="cb1-702"><a href="#cb1-702" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-703"><a href="#cb1-703" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-704"><a href="#cb1-704" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-705"><a href="#cb1-705" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-706"><a href="#cb1-706" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-707"><a href="#cb1-707" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-708"><a href="#cb1-708" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-709"><a href="#cb1-709" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-710"><a href="#cb1-710" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-711"><a href="#cb1-711" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-712"><a href="#cb1-712" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-713"><a href="#cb1-713" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p5</span></span>
+<span id="cb1-714"><a href="#cb1-714" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p5)</span>
+<span id="cb1-715"><a href="#cb1-715" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-716"><a href="#cb1-716" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-717"><a href="#cb1-717" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30 apresenta a proporção de acertos por escore para os itens de 26 (18º CE) a 30 (22º CE).</span>
+<span id="cb1-718"><a href="#cb1-718" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-721"><a href="#cb1-721" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-722"><a href="#cb1-722" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 26 (18º CE) a 30 (22º CE) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-723"><a href="#cb1-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30</span></span>
+<span id="cb1-724"><a href="#cb1-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-725"><a href="#cb1-725" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-726"><a href="#cb1-726" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.6] ITENS DE 26 A 30</span></span>
+<span id="cb1-727"><a href="#cb1-727" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-728"><a href="#cb1-728" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-729"><a href="#cb1-729" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-730"><a href="#cb1-730" aria-hidden="true" tabindex="-1"></a>itens6 <span class="ot">&lt;-</span> <span class="dv">26</span><span class="sc">:</span><span class="dv">30</span></span>
+<span id="cb1-731"><a href="#cb1-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-732"><a href="#cb1-732" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-733"><a href="#cb1-733" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens6]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-734"><a href="#cb1-734" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-735"><a href="#cb1-735" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-736"><a href="#cb1-736" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-737"><a href="#cb1-737" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-738"><a href="#cb1-738" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-739"><a href="#cb1-739" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-740"><a href="#cb1-740" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens6[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens6[<span class="dv">5</span>]]),</span>
+<span id="cb1-741"><a href="#cb1-741" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-742"><a href="#cb1-742" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-743"><a href="#cb1-743" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-744"><a href="#cb1-744" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-745"><a href="#cb1-745" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-746"><a href="#cb1-746" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-747"><a href="#cb1-747" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-748"><a href="#cb1-748" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-749"><a href="#cb1-749" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-750"><a href="#cb1-750" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-751"><a href="#cb1-751" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-752"><a href="#cb1-752" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p6</span></span>
+<span id="cb1-753"><a href="#cb1-753" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p6)</span>
+<span id="cb1-754"><a href="#cb1-754" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-755"><a href="#cb1-755" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-756"><a href="#cb1-756" aria-hidden="true" tabindex="-1"></a>A @fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35 apresenta a proporção de acertos por escore para os itens de 31 (23º CE) a 35 (27º CE).</span>
+<span id="cb1-757"><a href="#cb1-757" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-760"><a href="#cb1-760" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-761"><a href="#cb1-761" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proporção de Acertos por Escore dos Itens de 31 (23º CE) a 35 (27º CE) da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-762"><a href="#cb1-762" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35</span></span>
+<span id="cb1-763"><a href="#cb1-763" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-764"><a href="#cb1-764" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-765"><a href="#cb1-765" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.3.7] ITENS DE 31 A 35</span></span>
+<span id="cb1-766"><a href="#cb1-766" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------</span></span>
+<span id="cb1-767"><a href="#cb1-767" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-768"><a href="#cb1-768" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens</span></span>
+<span id="cb1-769"><a href="#cb1-769" aria-hidden="true" tabindex="-1"></a>itens7 <span class="ot">&lt;-</span> <span class="dv">31</span><span class="sc">:</span><span class="dv">35</span></span>
+<span id="cb1-770"><a href="#cb1-770" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-771"><a href="#cb1-771" aria-hidden="true" tabindex="-1"></a><span class="co"># Itens de 1 (1º FG) a 5 (5º FG)</span></span>
+<span id="cb1-772"><a href="#cb1-772" aria-hidden="true" tabindex="-1"></a>p7 <span class="ot">&lt;-</span> <span class="fu">get.curves_by_item</span>(df.hits, index[itens7]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-773"><a href="#cb1-773" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCORE, PROP_HIT, <span class="at">color =</span> ITEM)) <span class="sc">+</span></span>
+<span id="cb1-774"><a href="#cb1-774" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-775"><a href="#cb1-775" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, n.itens) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-776"><a href="#cb1-776" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-777"><a href="#cb1-777" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Escore"</span>,</span>
+<span id="cb1-778"><a href="#cb1-778" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporção de Acertos (%)"</span>,</span>
+<span id="cb1-779"><a href="#cb1-779" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">paste0</span>(<span class="st">"ITENS "</span>, index[itens7[<span class="dv">1</span>]], <span class="st">" A "</span>, index[itens7[<span class="dv">5</span>]]),</span>
+<span id="cb1-780"><a href="#cb1-780" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-781"><a href="#cb1-781" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-782"><a href="#cb1-782" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-783"><a href="#cb1-783" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-784"><a href="#cb1-784" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-785"><a href="#cb1-785" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-786"><a href="#cb1-786" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-787"><a href="#cb1-787" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-788"><a href="#cb1-788" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-789"><a href="#cb1-789" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-790"><a href="#cb1-790" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-791"><a href="#cb1-791" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir p7</span></span>
+<span id="cb1-792"><a href="#cb1-792" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p7)</span>
+<span id="cb1-793"><a href="#cb1-793" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-794"><a href="#cb1-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-795"><a href="#cb1-795" aria-hidden="true" tabindex="-1"></a><span class="fu">### Grupos de Desempenho</span></span>
+<span id="cb1-796"><a href="#cb1-796" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-799"><a href="#cb1-799" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-800"><a href="#cb1-800" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: DIV_GROUP_DISCR</span></span>
+<span id="cb1-801"><a href="#cb1-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-802"><a href="#cb1-802" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb1-803"><a href="#cb1-803" aria-hidden="true" tabindex="-1"></a><span class="co"># [3.5] GRUPOS DE DESEMPENHO</span></span>
+<span id="cb1-804"><a href="#cb1-804" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb1-805"><a href="#cb1-805" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-806"><a href="#cb1-806" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando P1 (percentil 33%) e P3 (percentil 67%)</span></span>
+<span id="cb1-807"><a href="#cb1-807" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df.hits<span class="sc">$</span>SCORE, <span class="at">probs =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-808"><a href="#cb1-808" aria-hidden="true" tabindex="-1"></a>q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df.hits<span class="sc">$</span>SCORE, <span class="at">probs =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-809"><a href="#cb1-809" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-810"><a href="#cb1-810" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-811"><a href="#cb1-811" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-812"><a href="#cb1-812" aria-hidden="true" tabindex="-1"></a>Com base na distribuição dos escores totais, os pontos de corte foram definidos nos percentis 33% ($\approx 1/3$ - PI) e 67% ($\approx 2/3$ - PS). Assim, os participantes foram agrupados em três níveis de desempenho:</span>
+<span id="cb1-813"><a href="#cb1-813" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-814"><a href="#cb1-814" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Grupo 1 (Baixo Desempenho):** pontuação inferior a **`r as.numeric(q1)`**;</span>
+<span id="cb1-815"><a href="#cb1-815" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Grupo 2 (Médio Desempenho):** pontuação entre **`r as.numeric(q1)`** e **`r as.numeric(q3)`**;</span>
+<span id="cb1-816"><a href="#cb1-816" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Grupo 3 (Alto Desempenho):** pontuação maior ou igual a **`r as.numeric(q3)`**.</span>
+<span id="cb1-817"><a href="#cb1-817" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-818"><a href="#cb1-818" aria-hidden="true" tabindex="-1"></a>Essa segmentação é útil para analisar se os itens da prova conseguem diferenciar bem os candidatos (discriminação), além de ajudar a identificar questões que são muito fáceis, muito difíceis ou que não discriminam.</span>
+<span id="cb1-819"><a href="#cb1-819" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-820"><a href="#cb1-820" aria-hidden="true" tabindex="-1"></a>Posteriormente, essa divisão permitirá calcular indicadores como **discriminação clássica** (diferença entre proporções de acerto nos Grupos 3 e 1) e **ponto bisserial**.</span>
+<span id="cb1-821"><a href="#cb1-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-822"><a href="#cb1-822" aria-hidden="true" tabindex="-1"></a>Veja a @tbl-DIV_GROUP_DISCR, que apresenta como ficou a divisão dos dados por meio de frequências absolutas e relativas</span>
+<span id="cb1-823"><a href="#cb1-823" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-826"><a href="#cb1-826" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-827"><a href="#cb1-827" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Frequência dos Grupos de Desempenho da Prova do ENADE para o Curso de Sitemas de Informação."</span></span>
+<span id="cb1-828"><a href="#cb1-828" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-DIV_GROUP_DISCR</span></span>
+<span id="cb1-829"><a href="#cb1-829" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-830"><a href="#cb1-830" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar variável de Grupo com base nas pontuações</span></span>
+<span id="cb1-831"><a href="#cb1-831" aria-hidden="true" tabindex="-1"></a>df.hits<span class="sc">$</span>GRUPO <span class="ot">&lt;-</span> <span class="fu">cut</span>(</span>
+<span id="cb1-832"><a href="#cb1-832" aria-hidden="true" tabindex="-1"></a>  df.hits<span class="sc">$</span>SCORE,</span>
+<span id="cb1-833"><a href="#cb1-833" aria-hidden="true" tabindex="-1"></a>  <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, q1, q3, <span class="cn">Inf</span>),</span>
+<span id="cb1-834"><a href="#cb1-834" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"GRUPO 1"</span>,<span class="st">"GRUPO 2"</span>, <span class="st">"GRUPO 3"</span>),</span>
+<span id="cb1-835"><a href="#cb1-835" aria-hidden="true" tabindex="-1"></a>  <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-836"><a href="#cb1-836" aria-hidden="true" tabindex="-1"></a>  <span class="at">right =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-837"><a href="#cb1-837" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-838"><a href="#cb1-838" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-839"><a href="#cb1-839" aria-hidden="true" tabindex="-1"></a><span class="co"># Armazenar os Resultados no Formato de Data Frame</span></span>
+<span id="cb1-840"><a href="#cb1-840" aria-hidden="true" tabindex="-1"></a>tbl.div_group <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-841"><a href="#cb1-841" aria-hidden="true" tabindex="-1"></a>  <span class="at">FREQ =</span> <span class="fu">as.numeric</span>(<span class="fu">table</span>(df.hits<span class="sc">$</span>GRUPO)),</span>
+<span id="cb1-842"><a href="#cb1-842" aria-hidden="true" tabindex="-1"></a>  <span class="at">PERCENT =</span> <span class="fu">as.numeric</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(df.hits<span class="sc">$</span>GRUPO))) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-843"><a href="#cb1-843" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-844"><a href="#cb1-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-845"><a href="#cb1-845" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste do Nome das Linhas</span></span>
+<span id="cb1-846"><a href="#cb1-846" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(tbl.div_group) <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(<span class="fu">c</span>(<span class="st">"GRUPO 1"</span>,<span class="st">"GRUPO 2"</span>, <span class="st">"GRUPO 3"</span>))</span>
+<span id="cb1-847"><a href="#cb1-847" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-848"><a href="#cb1-848" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar </span></span>
+<span id="cb1-849"><a href="#cb1-849" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>(tbl.div_group, <span class="at">rownames_to_stub =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb1-850"><a href="#cb1-850" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-851"><a href="#cb1-851" aria-hidden="true" tabindex="-1"></a>    <span class="at">FREQ =</span> <span class="fu">md</span>(<span class="st">"**Frquência**"</span>), <span class="at">PERCENT =</span> <span class="fu">md</span>(<span class="st">"**Percentual**"</span>)</span>
+<span id="cb1-852"><a href="#cb1-852" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-853"><a href="#cb1-853" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> FREQ, <span class="at">decimals =</span> <span class="dv">0</span>, <span class="at">sep_mark =</span> <span class="st">"."</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-854"><a href="#cb1-854" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> PERCENT, <span class="at">decimals =</span> <span class="dv">2</span>, <span class="at">dec_mark =</span> <span class="st">","</span>)</span>
+<span id="cb1-855"><a href="#cb1-855" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-856"><a href="#cb1-856" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-857"><a href="#cb1-857" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-858"><a href="#cb1-858" aria-hidden="true" tabindex="-1"></a><span class="fu">## Análise via Teoria de Resposta ao Item (TRI)</span></span>
+<span id="cb1-859"><a href="#cb1-859" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-860"><a href="#cb1-860" aria-hidden="true" tabindex="-1"></a>:::: progress</span>
+<span id="cb1-861"><a href="#cb1-861" aria-hidden="true" tabindex="-1"></a>:::: {.progress-bar style="width: 100%;"}</span>
+<span id="cb1-862"><a href="#cb1-862" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb1-863"><a href="#cb1-863" aria-hidden="true" tabindex="-1"></a>::::</span>
 </code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
