@@ -15,6 +15,8 @@
 # Definir o Diretório do Dados
 setwd("~/DETRAN/TRI_PROJECT_DIEGO/")
 
+options(OutDec = ",")
+
 # Pacotes Carregados
 library(dplyr)
 library(stringr)
@@ -48,7 +50,7 @@ path <- "MICRODADOS_ENADE_2017_LGPD/DADOS_GERAIS_SISTEMAS.rds"
 SIS.INFO <- readRDS(file = path)
 
 # Ajustes das Colunas de Vetores
-SIS.INFO.AUX <- SIS.INFO %>% mutate(
+SIS.INFO.AUX <- SIS.INFO |> mutate(
   DS_VT_GAB_OFG_FIN_ADJ = strsplit(str_remove_all(DS_VT_GAB_OFG_FIN, "[^A-Z]"), ""),
   DS_VT_GAB_OCE_FIN_ADJ = strsplit(str_remove_all(DS_VT_GAB_OCE_FIN, "[^A-Z]"), ""),
   DS_VT_ESC_OFG_ADJ = strsplit(str_remove_all(DS_VT_ESC_OFG, "[^A-Z\\.\\*]"), ""),
@@ -144,12 +146,12 @@ for (k in 1:n.itens.CE) {
 }
 
 # Tabela Final
-tbl.freq <- bind_rows(tbl.freq.FG, tbl.freq.CE) %>%
-  mutate(ITEM_ESPEC = index) %>%
+tbl.freq <- bind_rows(tbl.freq.FG, tbl.freq.CE) |>
+  mutate(ITEM_ESPEC = index) |>
   select(
     ITEM_ESPEC, Gabarito, Branco, Multiples, 
     A, B, C, D, E, Valids
-  ) %>%
+  ) |>
   `row.names<-`(1:length(index))
 
 # ---------------------------------------
@@ -169,7 +171,7 @@ Veja, a seguir, a @tbl-FREQ_ALTERNATIVE_ABS e @tbl-FREQ_ALTERNATIVE_REL. Que mos
 #| label: tbl-FREQ_ALTERNATIVE_ABS
 
 # Tabela com o Pacote gt
-gt(tbl.freq) %>%
+gt(tbl.freq) |>
   cols_label(
     ITEM_ESPEC = md("**Item**"),
     Gabarito   = md("**Gabarito**"),
@@ -181,16 +183,16 @@ gt(tbl.freq) %>%
     D          = md("**D**"),
     E          = md("**E**"),
     Valids     = md("**Válidas**")
-  ) %>%
+  ) |>
   cols_align(
     align = "center",
     columns = everything()
-  ) %>%
+  ) |>
   fmt_number(
     columns = 5:10,
     decimals = 0,
     sep_mark = "."
-  ) %>%
+  ) |>
   tab_source_note(
     source_note = md("FG: Formação Geral; CE: Componente Específico.")
   )
@@ -205,7 +207,7 @@ gt(tbl.freq) %>%
 # ---------------------------------------
 
 # Tabela com o Pacote gt
-gt(tbl.freq_relative) %>%
+gt(tbl.freq_relative) |>
   cols_label(
     ITEM_ESPEC = md("**Item Especificado**"),
     Gabarito   = md("**Gabarito**"),
@@ -215,16 +217,16 @@ gt(tbl.freq_relative) %>%
     D          = md("**D (%)**"),
     E          = md("**E (%)**"),
     Valids     = md("**Total (%)**")
-  ) %>%
+  ) |>
   cols_align(
     align = "center",
     columns = everything()
-  ) %>%
+  ) |>
   fmt_number(
     columns = 3:8,
     decimals = 2,
     dec_mark = ","
-  ) %>%
+  ) |>
   tab_source_note(
     source_note = md("FG: Formação Geral; CE: Componente Específico.")
   )
@@ -247,7 +249,7 @@ for (id in 1:n.itens) {
   valid.id <- tbl.freq[["Valids"]][id]
   
   # Extração do Gabarito
-  gab <- as.character(tbl.freq %>% select(Gabarito) %>% slice(id))
+  gab <- as.character(tbl.freq |> select(Gabarito) |> slice(id))
   
   # Proporção de Acertos (Verificação)
   if (gab == "ANULADA (E)") {
@@ -281,21 +283,21 @@ Veja, a seguir, a @tbl-PROP_HITS. Que apresenta as proporções de acertos para 
 # -----------------------------------
 
 # Tabela com o Pacote gt
-gt(tbl.prop_hit) %>%
+gt(tbl.prop_hit) |>
   cols_label(
     ITEM_ESPEC = md("**Item**"),
     GABARITO   = md("**Gabarito**"),
     PROP_HIT   = md("**Proporção de Acertos (%)**")
-  ) %>%
+  ) |>
   cols_align(
     align = "center",
     columns = everything()
-  ) %>%
+  ) |>
   fmt_number(
     columns = everything(),
     decimals = 2,
     dec_mark = ","
-  ) %>%
+  ) |>
   tab_source_note(
     source_note = md("FG: Formação Geral; CE: Componente Específico.")
   )
@@ -479,11 +481,11 @@ get.curves_by_item <- function(data, itens_ids) {
   
   # Iteração de Obtenção dos Dados
   for (item in itens_ids) {
-    curve.by.item <- data %>%
-      group_by(SCORE) %>%
+    curve.by.item <- data |>
+      group_by(SCORE) |>
       summarise(
         PROP_HIT = mean(get(item), na.rm = TRUE)
-      ) %>%
+      ) |>
       mutate(ITEM = item)
     
     # Join dos Dados
@@ -496,10 +498,10 @@ get.curves_by_item <- function(data, itens_ids) {
 
 O objetivo desta análise é avaliar a *Proporção de Acertos* por *Escore* de cada item.
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5 apresenta a proporção de acertos por escore para os itens de 1 (1º FG) a 5 (5º FG).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5 apresenta a proporção de acertos por escore para os itens de 1 (1ª FG) a 5 (5ª FG).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 1 (1º FG) a 5 (5º FG) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 1 (1ª FG) a 5 (5ª FG) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5
 
 # ----------------------
@@ -509,8 +511,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_1_A_5 apresenta a proporção de acertos por 
 # Itens
 itens1 <- 1:5
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p1 <- get.curves_by_item(df.hits, index[itens1]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p1 <- get.curves_by_item(df.hits, index[itens1]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -533,10 +535,10 @@ p1 <- get.curves_by_item(df.hits, index[itens1]) %>%
 print(p1)
 ```
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10 apresenta a proporção de acertos por escore para os itens de 6 (6º FG) a 10 (2º CE).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10 apresenta a proporção de acertos por escore para os itens de 6 (6ª FG) a 10 (2ª CE).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 6 (6º FG) a 10 (2º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 6 (6ª FG) a 10 (2ª CE) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10
 
 # -----------------------
@@ -546,8 +548,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_6_A_10 apresenta a proporção de acertos por
 # Itens
 itens2 <- 6:10
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p2 <- get.curves_by_item(df.hits, index[itens2]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p2 <- get.curves_by_item(df.hits, index[itens2]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -570,10 +572,10 @@ p2 <- get.curves_by_item(df.hits, index[itens2]) %>%
 print(p2)
 ```
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15 apresenta a proporção de acertos por escore para os itens de 11 (3º CE) a 15 (7º CE).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15 apresenta a proporção de acertos por escore para os itens de 11 (3ª CE) a 15 (7ª CE).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 11 (3º CE) a 15 (7º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 11 (3ª CE) a 15 (7ª CE) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15
 
 # ------------------------
@@ -583,8 +585,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_11_A_15 apresenta a proporção de acertos po
 # Itens
 itens3 <- 11:15
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p3 <- get.curves_by_item(df.hits, index[itens3]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p3 <- get.curves_by_item(df.hits, index[itens3]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -607,10 +609,10 @@ p3 <- get.curves_by_item(df.hits, index[itens3]) %>%
 print(p3)
 ```
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20 apresenta a proporção de acertos por escore para os itens de 16 (8º CE) a 20 (12º CE).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20 apresenta a proporção de acertos por escore para os itens de 16 (8ª CE) a 20 (12ª CE).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 16 (8º CE) a 20 (12º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 16 (8ª CE) a 20 (12ª CE) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20
 
 # ------------------------
@@ -620,8 +622,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_16_A_20 apresenta a proporção de acertos po
 # Itens
 itens4 <- 16:20
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p4 <- get.curves_by_item(df.hits, index[itens4]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p4 <- get.curves_by_item(df.hits, index[itens4]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -644,10 +646,10 @@ p4 <- get.curves_by_item(df.hits, index[itens4]) %>%
 print(p4)
 ```
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25 apresenta a proporção de acertos por escore para os itens de 21 (13º CE) a 25 (17º CE).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25 apresenta a proporção de acertos por escore para os itens de 21 (13ª CE) a 25 (17ª CE).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 21 (13º CE) a 25 (17º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 21 (13ª CE) a 25 (17ª CE) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25
 
 # ------------------------
@@ -657,8 +659,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_21_A_25 apresenta a proporção de acertos po
 # Itens
 itens5 <- 21:25
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p5 <- get.curves_by_item(df.hits, index[itens5]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p5 <- get.curves_by_item(df.hits, index[itens5]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -681,10 +683,10 @@ p5 <- get.curves_by_item(df.hits, index[itens5]) %>%
 print(p5)
 ```
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30 apresenta a proporção de acertos por escore para os itens de 26 (18º CE) a 30 (22º CE).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30 apresenta a proporção de acertos por escore para os itens de 26 (18ª CE) a 30 (22ª CE).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 26 (18º CE) a 30 (22º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 26 (18ª CE) a 30 (22ª CE) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30
 
 # ------------------------
@@ -694,8 +696,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_26_A_30 apresenta a proporção de acertos po
 # Itens
 itens6 <- 26:30
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p6 <- get.curves_by_item(df.hits, index[itens6]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p6 <- get.curves_by_item(df.hits, index[itens6]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -718,10 +720,10 @@ p6 <- get.curves_by_item(df.hits, index[itens6]) %>%
 print(p6)
 ```
 
-A @fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35 apresenta a proporção de acertos por escore para os itens de 31 (23º CE) a 35 (27º CE).
+A @fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35 apresenta a proporção de acertos por escore para os itens de 31 (23ª CE) a 35 (27ª CE).
 
 ```{r}
-#| fig-cap: "Proporção de Acertos por Escore dos Itens de 31 (23º CE) a 35 (27º CE) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| fig-cap: "Proporção de Acertos por Escore dos Itens de 31 (23ª CE) a 35 (27ª CE) da Prova do ENADE para o Curso de Sitemas de Informação."
 #| label: fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35
 
 # ------------------------
@@ -731,8 +733,8 @@ A @fig-PROP_HITS_AND_SCORE_BY_ITEM_31_A_35 apresenta a proporção de acertos po
 # Itens
 itens7 <- 31:35
 
-# Itens de 1 (1º FG) a 5 (5º FG)
-p7 <- get.curves_by_item(df.hits, index[itens7]) %>%
+# Itens de 1 (1ª FG) a 5 (5ª FG)
+p7 <- get.curves_by_item(df.hits, index[itens7]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -805,11 +807,11 @@ tbl.div_group <- data.frame(
 row.names(tbl.div_group) <- str_to_title(c("GRUPO 1","GRUPO 2", "GRUPO 3"))
 
 # Visualizar 
-gt(tbl.div_group, rownames_to_stub = T) %>%
+gt(tbl.div_group, rownames_to_stub = T) |>
   cols_label(
     FREQ = md("**Frquência**"), PERCENT = md("**Percentual**")
-  ) %>%
-  fmt_number(columns = FREQ, decimals = 0, sep_mark = ".") %>%
+  ) |>
+  fmt_number(columns = FREQ, decimals = 0, sep_mark = ".") |>
   fmt_number(columns = PERCENT, decimals = 2, dec_mark = ",")
 ```
 
@@ -1253,6 +1255,576 @@ for (k in 1:n.itens) {
 ```
 
 ## Análise via Teoria de Resposta ao Item (TRI)
+
+### Apresente uma tabela com as estimativas dos parâmetros dos itens
+
+```{r}
+#| label: PARAMS_TRI_OPTIM
+
+# Carregar e tratar os parâmetros otimizados
+params.itens <- read.table("C:/Users/user/Documents/DETRAN/TRI_PROJECT_DIEGO/TRI_OUTPUTS_SISTEMAS/T1_PARAMS_ITENS.txt", header = T) |>
+  mutate(item = index[!ifelse(index == "6ª CE", T, F)]) |>
+  select(item, a, b, g, -u)
+
+# Renomaer os rótulos das linhas
+rownames(params.itens) <- index[!ifelse(index == "6ª CE", T, F)]
+```
+
+```{r}
+#| tbl-cap: "Valores dos Parâmetros Estimados dos Itens da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: tbl-PARAMS_TRI_OPTIM
+
+# Tabela com o Pacote gt
+gt(params.itens) |>
+  cols_align(columns = everything(), align = "center") |>
+  cols_label(
+    item = md("**Item**"),
+    a = md("**Discriminação ($a$)**"), 
+    b = md("**Dificuldade ($b$)**"),
+    g = md("**Acerto ao Acaso ($c$)**")
+  ) |>
+  fmt_number(
+    columns = everything(),
+    decimals = 4,
+    sep_mark = ".",
+    dec_mark = ","
+  ) |>
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+```
+
+Ao anarlizarmos a @tbl-PARAMS_TRI_OPTIM, podemos perceber que os valores dos parâmetros para os itens estão fora dos intervalos esperados. Por exemplo, para o parâmetro de **Discriminação ($a$)**. Era esperado que os valores deste parâmetro estejam entre $[0,5 ; 4,0]$, entretanto tal parâmetro está variando no intervalo [`r min(params.itens$a) |> round(4)`; `r max(params.itens$a) |> round(4)`]. Os itens que apresentaram parâmetro de discriminação fora do intervalo esperado foram: **`r paste0(params.itens |> filter(a < 0.5 | a > 4) |> row.names(), collapse = ", ")`**.
+
+Já do parâmetro de **Dificuldade ($b$)** era esperado que a faixa de valores estivesse dentro do intervalo $[-4 ; 4]$, contudo os valores do parâmetro **$b$** variam no intervalo: [`r min(params.itens$b) |> round(4)`; `r max(params.itens$b) |> round(4)`]. Os itens que se mostraram abaixo do limite inferir esperado correspondem ao: **`r paste0(params.itens |> filter(b < -4 | b > 4) |> row.names(), collapse = ", ")`**.
+
+Por fim, esperava-se que a *probabilidade do indivíduo acertar o item ao acaso* variasse no intervalo $[0 ; 0,35]$. Entretanto essa probabilidade apresentou valor(es) fora do intervalo esperado, como o: **`r paste0(params.itens |> filter(g < 0 | g > 0.35) |> row.names(), collapse = ", ")`**.
+
+### Desenhe um gráfico de dispersão em que os pontos correspondem aos itens, com estimativas dos parâmetros de Dificuldade (x) versus Proporção de Acerto (y). Comente o resultado, sobretudo sobre itens (pontos) destoantes
+
+```{r}
+#| fig-cap: "Dificuldade versus Proporção de Acertos dos Itens da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-DIFICULD_VS_HITS_PLOT
+
+bind_cols(
+  params.itens,
+  tbl.prop_hit |> filter(!is.na(PROP_HIT))
+) |>
+  select(-c(a, g, ITEM_ESPEC, GABARITO)) |>
+  # Gráfico com ggplot2
+  ggplot(aes(x = b, y = PROP_HIT)) +
+  geom_point(color = "blue", size = 2) +
+  geom_smooth(
+    formula = "y ~ x", method = "lm", 
+    color = "red", fill = "red", alpha = 0.25
+  ) +
+  geom_text(
+    aes(x = b, y = PROP_HIT, label = item), 
+    size = 3, vjust = -0.5, 
+    fontface = "bold"
+  ) +
+  labs(x = "Dificuldade", y = "Proporção de Acertos") +
+  theme_classic(base_size = 12) +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+```
+
+### Histograma da Proeficiência ($\theta$) na escala linear: $\theta^{*} = 100 \times \theta + 500$
+
+```{r}
+#| fig-cap: "Histograma da Proeficiência dos Participantes da Prova do ENADE para o Curso de Sitemas de Informação."
+#| label: fig-HIST_THETA_TRF
+
+# Carregar dados das proeficências
+theta.proeficy <- read.table("C:/Users/user/Documents/DETRAN/TRI_PROJECT_DIEGO/TRI_OUTPUTS_SISTEMAS/F1_PROEFICIENCIAS.txt", header = T) |>
+  rename(
+    theta_score = F1,
+    theta_trf = F1.1
+  )
+
+# Gráfico com ggplot2
+ggplot(data = theta.proeficy, aes(x = theta_trf)) +
+  geom_histogram(color = "white", fill = "steelblue") +
+  labs(
+    x = "Proeficiências Transformadas (Escala Linear)",
+    y = "Frqueência"
+  ) +
+  theme_classic() +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+```
+
+### Gráfico do Ajuste do Item
+
+```{r}
+#| label: CONFIGURATIONS_INIT_PLOT_FIT_ITEM
+
+# Curva Teórica do Item
+theoretical.curve <- function(theta, par.a, par.b, par.c) par.c + (1 - par.c) / (1 + exp(-par.a * (theta - par.b)))
+
+# Criando Função para Fazer o Gráfico de Ajuste do Item
+plot.fit_item <- function(item_index, theta, responses, params, alpha = 0.05) {
+  
+  # Quantil da Normal(0, 1)
+  z <- qnorm(1 - alpha/2)
+  
+  # Nome do item
+  item_name <- index[!ifelse(index == "6ª CE", T, F)][item_index]
+  
+  # Respostas do item
+  y <- responses[[item_index]]
+  
+  # Quebras
+  breaks <- seq(-3, 3, by = 0.2)
+  
+  # Categorizar theta
+  groups.theta <- cut(theta, breaks = breaks, include.lowest = TRUE)
+  
+  # Vetor de Parâmetros
+  vec.par <- params |> select(-item) |> slice(item_index) |> as.numeric()
+  
+  # Curva Teórica
+  theory.curve <- theoretical.curve(
+    theta,
+    par.a = vec.par[1],
+    par.b = vec.par[2],
+    par.c = vec.par[3]
+  )
+  
+  # Data Frame da Curva Teórica
+  theory.curve.df <- data.frame(THETA = theta, Pr = theory.curve)
+  colnames(theory.curve.df) <- c("THETA", "Pr")
+  theory.curve.df <- theory.curve.df |> arrange(THETA)
+  
+  # Calcular proporção de acertos e intervalo de confiança (binomial)
+  data.empirical <- data.frame(THETA = theta, ACERTO = y, GRUPO = groups.theta)
+  colnames(data.empirical) <- c("THETA", "ACERTO", "GRUPO")
+  data.empirical <- data.empirical |>
+    group_by(GRUPO) |>
+    summarise(
+      n = n(),
+      PROP = mean(ACERTO),
+      CENTRO = mean(THETA)
+    ) |>
+    mutate(
+      SE = sqrt((PROP * (1 - PROP)) / n)
+    ) |>
+    mutate(
+      LOWER = pmax(0, PROP - z * SE),
+      UPPER = pmin(1, PROP + z * SE)
+    ) |>
+    filter(!is.na(GRUPO))
+  
+  print(
+    # Gráfico de Ajuste do Item com ggplot2
+    ggplot() +
+      geom_line(
+        data = theory.curve.df, aes(x = THETA, y = Pr), 
+        color = "blue", size = 1
+      ) +
+      geom_point(
+        data = data.empirical, aes(x = CENTRO, y = PROP), 
+        color = "red", size = 2
+      ) +
+      geom_errorbar(
+        data = data.empirical, aes(x = CENTRO, ymin = LOWER, ymax = UPPER), 
+        width = 0.1
+      ) +
+      labs(
+        title = paste("Ajuste do Item:", item_name),
+        subtitle = paste0(
+          "D = 1; a = ", format(round(vec.par[1], 4), big.mark = ".", decimal.mark = ","), 
+          "; b = ", format(round(vec.par[2], 4), big.mark = ".", decimal.mark = ","), 
+          "; c = ", format(round(vec.par[3], 4), big.mark = ".", decimal.mark = ",")
+        ),
+        x = bquote("Proeficiências (" ~ theta ~ ")"), 
+        y = bquote("Pr(" ~ theta ~ ")")
+      ) +
+      coord_cartesian(ylim = c(0, 1)) +
+      theme_classic(base_size = 12) +
+      theme(
+        plot.title = element_text(hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, face = "bold"),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold")
+      )
+  )
+}
+```
+
+A seguir, a @fig-PLOT_FIT_ITEM_1FG_6FG apresenta o gráfico de ajuste do item para dos itens  1ª FG (1), 2ª FG (2), 3ª FG (3), 4ª FG (4), 5ª FG (5) e 6ª FG (6).
+
+```{r}
+#| fig-cap: "Gráfico do Ajuste dos Itens 1ª FG a 6ª FG da Prova do ENADE para o Curso de Sitemas de Informação."
+#| layout-nrow: 2
+#| layout-ncol: 3
+#| fig-subcap: 
+#| - "1ª FG"
+#| - "2ª FG"
+#| - "3ª FG"
+#| - "4ª FG"
+#| - "5ª FG"
+#| - "6ª FG"
+#| label: fig-PLOT_FIT_ITEM_1FG_6FG
+
+# Item 1ª FG
+plot.fit_item(
+  item_index = 1,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 2ª FG
+plot.fit_item(
+  item_index = 2,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 3ª FG
+plot.fit_item(
+  item_index = 3,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 4ª FG
+plot.fit_item(
+  item_index = 4,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 5ª FG
+plot.fit_item(
+  item_index = 5,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 6ª FG
+plot.fit_item(
+  item_index = 6,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+```
+
+A seguir, a @fig-PLOT_FIT_ITEM_7FG_4CE apresenta o gráfico de ajuste do item para dos itens  7ª FG (7), 8ª FG (8), 1ª CE (9), 2ª CE (10), 3ª CE (11) e 4ª CE (12).
+
+```{r}
+#| fig-cap: "Gráfico do Ajuste dos Itens 7ª FG a 4ª CE da Prova do ENADE para o Curso de Sitemas de Informação."
+#| layout-nrow: 2
+#| layout-ncol: 3
+#| fig-subcap: 
+#| - "7ª FG"
+#| - "8ª FG"
+#| - "1ª CE"
+#| - "2ª CE"
+#| - "3ª CE"
+#| - "4ª CE"
+#| label: fig-PLOT_FIT_ITEM_5FG_8FG
+
+
+
+# Item 7ª FG
+plot.fit_item(
+  item_index = 7,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 8ª FG
+plot.fit_item(
+  item_index = 8,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 1ª CE
+plot.fit_item(
+  item_index = 9,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 2ª CE
+plot.fit_item(
+  item_index = 10,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 3ª CE
+plot.fit_item(
+  item_index = 11,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 4ª CE
+plot.fit_item(
+  item_index = 12,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+```
+
+A seguir, a @fig-PLOT_FIT_ITEM_5CE_11CE apresenta o gráfico de ajuste do item para dos itens  5ª CE (13), 7ª CE (15), 8ª CE (16), 9ª CE (17), 10ª CE (18) e 11ª CE (19).
+
+```{r}
+#| fig-cap: "Gráfico do Ajuste dos Itens 5ª FG a 11ª CE (6ª foi anulada) da Prova do ENADE para o Curso de Sitemas de Informação."
+#| layout-nrow: 2
+#| layout-ncol: 3
+#| fig-subcap: 
+#| - "5ª CE"
+#| - "7ª CE"
+#| - "8ª CE"
+#| - "9ª CE"
+#| - "10ª CE"
+#| - "11ª CE"
+#| label: fig-PLOT_FIT_ITEM_5CE_11CE
+
+# Item 5ª CE
+plot.fit_item(
+  item_index = 13,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 7ª CE
+plot.fit_item(
+  item_index = 14,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 8ª CE
+plot.fit_item(
+  item_index = 15,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 9ª CE
+plot.fit_item(
+  item_index = 16,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 10ª CE
+plot.fit_item(
+  item_index = 17,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 11ª CE
+plot.fit_item(
+  item_index = 18,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+```
+
+A seguir, a @fig-PLOT_FIT_ITEM_12CE_17CE apresenta o gráfico de ajuste do item para dos itens  12ª CE (20), 13ª CE (21), 14ª CE (22), 15ª CE (23), 16ª CE (24) e 17ª CE (25).
+
+```{r}
+#| fig-cap: "Gráfico do Ajuste dos Itens 12ª FG a 17ª CE da Prova do ENADE para o Curso de Sitemas de Informação."
+#| layout-nrow: 2
+#| layout-ncol: 3
+#| fig-subcap: 
+#| - "12ª CE"
+#| - "13ª CE"
+#| - "14ª CE"
+#| - "15ª CE"
+#| - "16ª CE"
+#| - "17ª CE"
+#| label: fig-PLOT_FIT_ITEM_12CE_17CE
+
+# Item 12ª CE
+plot.fit_item(
+  item_index = 19,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 13ª CE
+plot.fit_item(
+  item_index = 20,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 14ª CE
+plot.fit_item(
+  item_index = 21,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 15ª CE
+plot.fit_item(
+  item_index = 22,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 16ª CE
+plot.fit_item(
+  item_index = 23,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 17ª CE
+plot.fit_item(
+  item_index = 24,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+```
+
+A seguir, a @fig-PLOT_FIT_ITEM_18CE_23CE apresenta o gráfico de ajuste do item para dos itens  18ª CE (26), 19ª CE (27), 20ª CE (28), 21ª CE (29), 22ª CE (30) e 23ª CE (31).
+
+```{r}
+#| fig-cap: "Gráfico do Ajuste dos Itens 18ª FG a 23ª CE da Prova do ENADE para o Curso de Sitemas de Informação."
+#| layout-nrow: 2
+#| layout-ncol: 3
+#| fig-subcap: 
+#| - "18ª CE"
+#| - "19ª CE"
+#| - "20ª CE"
+#| - "21ª CE"
+#| - "22ª CE"
+#| - "23ª CE"
+#| label: fig-PLOT_FIT_ITEM_18CE_23CE
+
+# Item 12ª CE
+plot.fit_item(
+  item_index = 25,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 13ª CE
+plot.fit_item(
+  item_index = 26,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 14ª CE
+plot.fit_item(
+  item_index = 27,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 15ª CE
+plot.fit_item(
+  item_index = 28,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 16ª CE
+plot.fit_item(
+  item_index = 29,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 17ª CE
+plot.fit_item(
+  item_index = 30,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+```
+
+A seguir, a @fig-PLOT_FIT_ITEM_24CE_27CE apresenta o gráfico de ajuste do item para dos itens  24ª CE (32), 25ª CE (33), 26ª CE (34), 27ª CE (35).
+
+```{r}
+#| fig-cap: "Gráfico do Ajuste dos Itens 24ª FG a 27ª CE da Prova do ENADE para o Curso de Sitemas de Informação."
+#| layout-nrow: 2
+#| layout-ncol: 2
+#| fig-subcap: 
+#| - "24ª CE"
+#| - "25ª CE"
+#| - "26ª CE"
+#| - "27ª CE"
+#| label: fig-PLOT_FIT_ITEM_24CE_27CE
+
+# Item 24ª CE
+plot.fit_item(
+  item_index = 31,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 25ª CE
+plot.fit_item(
+  item_index = 32,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 26ª CE
+plot.fit_item(
+  item_index = 33,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+
+# Item 27ª CE
+plot.fit_item(
+  item_index = 34,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
+```
+
+### Proporção de Alternativas por Proeficiência
 
 :::: progress
 :::: {.progress-bar style="width: 100%;"}
