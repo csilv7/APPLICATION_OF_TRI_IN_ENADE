@@ -1,6 +1,8 @@
 # APLICAÇÃO DA TEORIA DE RESPOSTA AO ITEM (TRI) NO ENADE
 
-## Autores:
+## Resumo
+
+## Autores
 
 Estão envolvidos no desenvolvimento desse projeto:
 
