@@ -2,6 +2,8 @@
 
 ## Resumo
 
+Este projeto trata sobre...
+
 ## Autores
 
 Estão envolvidos no desenvolvimento desse projeto:
