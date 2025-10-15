@@ -18,6 +18,7 @@ setwd("~/DETRAN/TRI_PROJECT_DIEGO/")
 # Pacotes Carregados
 library(dplyr)
 library(stringr)
+
 library(ggplot2)
 
 library(gt)
@@ -48,7 +49,7 @@ path <- "MICRODADOS_ENADE_2017_LGPD/DADOS_GERAIS_SISTEMAS.rds"
 SIS.INFO <- readRDS(file = path)
 
 # Ajustes das Colunas de Vetores
-SIS.INFO.AUX <- SIS.INFO %>% mutate(
+SIS.INFO.AUX <- SIS.INFO |> mutate(
   DS_VT_GAB_OFG_FIN_ADJ = strsplit(str_remove_all(DS_VT_GAB_OFG_FIN, "[^A-Z]"), ""),
   DS_VT_GAB_OCE_FIN_ADJ = strsplit(str_remove_all(DS_VT_GAB_OCE_FIN, "[^A-Z]"), ""),
   DS_VT_ESC_OFG_ADJ = strsplit(str_remove_all(DS_VT_ESC_OFG, "[^A-Z\\.\\*]"), ""),
@@ -132,12 +133,12 @@ for (k in 1:n.itens.CE) {
 }
 
 # Tabela Final
-tbl.freq <- bind_rows(tbl.freq.FG, tbl.freq.CE) %>%
-  mutate(ITEM_ESPEC = index) %>%
+tbl.freq <- bind_rows(tbl.freq.FG, tbl.freq.CE) |>
+  mutate(ITEM_ESPEC = index) |>
   select(
     ITEM_ESPEC, Gabarito, Branco, Multiples, 
     A, B, C, D, E, Valids
-  ) %>%
+  ) |>
   `row.names<-`(1:length(index))
 
 # Visualizar
@@ -148,7 +149,7 @@ tbl.freq
 # ----------------------------
 
 # Tabela com o Pacote gt
-gt(tbl.freq) %>%
+gt(tbl.freq) |>
   cols_label(
     ITEM_ESPEC = md("**Item Especificado**"),
     Gabarito   = md("**Gabarito**"),
@@ -160,11 +161,11 @@ gt(tbl.freq) %>%
     D          = md("**D**"),
     E          = md("**E**"),
     Valids     = md("**Válidas**")
-  ) %>%
+  ) |>
   cols_align(
     align = "center",
     columns = everything()
-  ) %>%
+  ) |>
   fmt_number(
     columns = 5:10,
     decimals = 0,
@@ -185,7 +186,7 @@ tbl.freq_relative[, 8] <- rowSums(tbl.freq_relative[, 3:7])
 # ---------------------------------------
 
 # Tabela com o Pacote gt
-gt(tbl.freq_relative) %>%
+gt(tbl.freq_relative) |>
   cols_label(
     ITEM_ESPEC = md("**Item Especificado**"),
     Gabarito   = md("**Gabarito**"),
@@ -195,11 +196,11 @@ gt(tbl.freq_relative) %>%
     D          = md("**D (%)**"),
     E          = md("**E (%)**"),
     Valids     = md("**Total (%)**")
-  ) %>%
+  ) |>
   cols_align(
     align = "center",
     columns = everything()
-  ) %>%
+  ) |>
   fmt_number(
     columns = 3:8,
     decimals = 2,
@@ -223,7 +224,7 @@ for (id in 1:n.itens) {
   valid.id <- tbl.freq[["Valids"]][id]
   
   # Extração do Gabarito
-  gab <- as.character(tbl.freq %>% select(Gabarito) %>% slice(id))
+  gab <- as.character(tbl.freq |> select(Gabarito) |> slice(id))
   
   # Proporção de Acertos (Verificação)
   if (gab == "ANULADA (E)") {
@@ -253,16 +254,16 @@ tbl.prop_hit
 # -----------------------------------
 
 # Tabela com o Pacote gt
-gt(tbl.prop_hit) %>%
+gt(tbl.prop_hit) |>
   cols_label(
     ITEM_ESPEC = md("**Item Especificado**"),
     GABARITO   = md("**Gabarito**"),
     PROP_HIT   = md("**Proporção de Acertos (%)**")
-  ) %>%
+  ) |>
   cols_align(
     align = "center",
     columns = everything()
-  ) %>%
+  ) |>
   fmt_number(
     columns = everything(),
     decimals = 2,
@@ -278,7 +279,7 @@ gt(tbl.prop_hit) %>%
 # ---------------------------
 
 # Matriz de acertos (0/1) para todos os participantes
-matrix.resp <- matrix(NA, nrow = nrow(df.aux), ncol = n.itens)
+matrix.resp <- matrix(NA, nrow = nrow(SIS.INFO.AUX), ncol = n.itens)
 
 # Iteração de Armazenamento
 for (k in 1:n.itens.FG) {
@@ -421,11 +422,11 @@ get.curves_by_item <- function(data, itens_ids) {
   
   # Iteração de Obtenção dos Dados
   for (item in itens_ids) {
-    curve.by.item <- data %>%
-      group_by(SCORE) %>%
+    curve.by.item <- data |>
+      group_by(SCORE) |>
       summarise(
         PROP_HIT = mean(get(item), na.rm = TRUE)
-      ) %>%
+      ) |>
       mutate(ITEM = item)
     
     # Join dos Dados
@@ -443,7 +444,7 @@ get.curves_by_item <- function(data, itens_ids) {
 itens1 <- 1:5
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p1 <- get.curves_by_item(df.hits, index[itens1]) %>%
+p1 <- get.curves_by_item(df.hits, index[itens1]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -473,7 +474,7 @@ print(p1)
 itens2 <- 6:10
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p2 <- get.curves_by_item(df.hits, index[itens2]) %>%
+p2 <- get.curves_by_item(df.hits, index[itens2]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -503,7 +504,7 @@ print(p2)
 itens3 <- 11:15
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p3 <- get.curves_by_item(df.hits, index[itens3]) %>%
+p3 <- get.curves_by_item(df.hits, index[itens3]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -533,7 +534,7 @@ print(p3)
 itens4 <- 16:20
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p4 <- get.curves_by_item(df.hits, index[itens4]) %>%
+p4 <- get.curves_by_item(df.hits, index[itens4]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -563,7 +564,7 @@ print(p4)
 itens5 <- 21:25
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p5 <- get.curves_by_item(df.hits, index[itens5]) %>%
+p5 <- get.curves_by_item(df.hits, index[itens5]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -593,7 +594,7 @@ print(p5)
 itens6 <- 26:30
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p6 <- get.curves_by_item(df.hits, index[itens6]) %>%
+p6 <- get.curves_by_item(df.hits, index[itens6]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -623,7 +624,7 @@ print(p6)
 itens7 <- 31:35
 
 # Itens de 1 (1º FG) a 5 (5º FG)
-p7 <- get.curves_by_item(df.hits, index[itens7]) %>%
+p7 <- get.curves_by_item(df.hits, index[itens7]) |>
   ggplot(aes(x = SCORE, PROP_HIT, color = ITEM)) +
   geom_line(size = 1) + geom_point() +
   xlim(0, n.itens) + ylim(0, 1) +
@@ -714,9 +715,705 @@ tbl.div_group <- data.frame(
 row.names(tbl.div_group) <- str_to_title(c("GRUPO 1","GRUPO 2", "GRUPO 3"))
 
 # Visualizar 
-gt(tbl.div_group, rownames_to_stub = T) %>%
+gt(tbl.div_group, rownames_to_stub = T) |>
   cols_label(
     FREQ = md("**Frquência**"), PERCENT = md("**Percentual**")
-  ) %>%
-  fmt_number(columns = FREQ, decimals = 0, sep_mark = ".") %>%
+  ) |>
+  fmt_number(columns = FREQ, decimals = 0, sep_mark = ".") |>
   fmt_number(columns = PERCENT, decimals = 2, dec_mark = ",")
+
+# --------------------------------------------
+# [3.6] DISCRIMINAÇÃO DOS GRUPOS DE DESEMPENHO
+# --------------------------------------------
+
+# Inicializa tabela
+tbl.discrimination.FG <- data.frame()
+
+# Iteração de captura dos dados
+for (k in 1:n.itens.FG) {
+  # Data Frame Temporário
+  temp <- data.frame(
+    GRUPO = df.hits$GRUPO,
+    RESPOSTA = matrix.resp[, k],
+    ACERTO = matrix.hits[, k]
+  )
+  
+  # Proporção de Acertos por Grupo (para Discriminação Clássica)
+  hits_by_group <- temp |>
+    group_by(GRUPO) |>
+    summarise(
+      `PROPORÇÃO DE ACERTO` = mean(ACERTO, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    tidyr::pivot_wider(names_from = GRUPO, values_from = `PROPORÇÃO DE ACERTO`)
+  
+  # Frequência relativa por alternativa em cada grupo
+  freq_by_group <- temp |>
+    filter(RESPOSTA %in% c("A", "B", "C", "D", "E")) |>
+    group_by(GRUPO, RESPOSTA) |>
+    summarise(FREQ = n(), .groups = "drop") |>
+    group_by(GRUPO) |>
+    mutate(PROP = round(100 * FREQ / sum(FREQ), 2)) |>
+    tidyr::pivot_wider(names_from = RESPOSTA, values_from = PROP) |>
+    ungroup()
+  
+  # Unifica
+  row <- data.frame(
+    ITEM = index[k],
+    
+    # GABARITO = tbl.prop_hit$GABARITO[k.adj],
+    # 
+    # A_G1 = freq_by_group$A[1],
+    # B_G1 = freq_by_group$B[2],
+    # C_G1 = freq_by_group$C[3],
+    # D_G1 = freq_by_group$D[4],
+    # E_G1 = freq_by_group$E[5],
+    # 
+    # A_G2 = freq_by_group$A[6],
+    # B_G2 = freq_by_group$B[7],
+    # C_G2 = freq_by_group$C[8],
+    # D_G2 = freq_by_group$D[9],
+    # E_G2 = freq_by_group$E[10],
+    # 
+    # A_G3 = freq_by_group$A[11],
+    # B_G3 = freq_by_group$B[12],
+    # C_G3 = freq_by_group$C[13],
+    # D_G3 = freq_by_group$D[14],
+    # E_G3 = freq_by_group$E[15],
+    
+    P1 = hits_by_group$`GRUPO 1`,
+    P3 = hits_by_group$`GRUPO 3`,
+    DISCRIMIN = round(hits_by_group$`GRUPO 3` - hits_by_group$`GRUPO 1`, 4)
+  )
+  
+  # Atualiza a tabela
+  tbl.discrimination.FG <- bind_rows(tbl.discrimination.FG, row)
+}
+
+# Ajuste para Visualização
+tbl.discrimination.FG <- tbl.discrimination.FG |>
+  mutate(
+    `DISCRIMINAÇÃO` = DISCRIMIN * 100,
+    `CLASSIFICAÇÃO` = ifelse(DISCRIMIN < 0.2, "Abaixo de 20%", "Ok")
+  ) |>
+  select(ITEM, `DISCRIMINAÇÃO`, `CLASSIFICAÇÃO`)
+
+# Visualizar
+tbl.discrimination.FG
+
+# ==============================================================================
+
+# Inicializa tabela
+tbl.discrimination.CE <- data.frame()
+
+# Iteração de captura dos dados
+for (k in 1:n.itens.CE) {
+  # Ajuste do índice
+  k.adj <- k + 8
+  
+  # Data Frame Temporário
+  temp <- data.frame(
+    GRUPO = df.hits$GRUPO,
+    RESPOSTA = matrix.resp[, k.adj],
+    ACERTO = matrix.hits[, k.adj]
+  )
+  
+  # Proporção de Acertos por Grupo (para Discriminação Clássica)
+  hits_by_group <- temp |>
+    group_by(GRUPO) |>
+    summarise(
+      `PROPORÇÃO DE ACERTO` = mean(ACERTO, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    tidyr::pivot_wider(names_from = GRUPO, values_from = `PROPORÇÃO DE ACERTO`)
+  
+  # Frequência relativa por alternativa em cada grupo
+  freq_by_group <- temp |>
+    filter(RESPOSTA %in% c("A", "B", "C", "D", "E")) |>
+    group_by(GRUPO, RESPOSTA) |>
+    summarise(FREQ = n(), .groups = "drop") |>
+    group_by(GRUPO) |>
+    mutate(PROP = round(100 * FREQ / sum(FREQ), 2)) |>
+    tidyr::pivot_wider(names_from = RESPOSTA, values_from = PROP) |>
+    ungroup()
+  
+  # Unifica
+  row <- data.frame(
+    ITEM = index[k.adj],
+    
+    # GABARITO = tbl.prop_hit$GABARITO[k],
+    # 
+    # A_G1 = freq_by_group$A[1],
+    # B_G1 = freq_by_group$B[2],
+    # C_G1 = freq_by_group$C[3],
+    # D_G1 = freq_by_group$D[4],
+    # E_G1 = freq_by_group$E[5],
+    # 
+    # A_G2 = freq_by_group$A[6],
+    # B_G2 = freq_by_group$B[7],
+    # C_G2 = freq_by_group$C[8],
+    # D_G2 = freq_by_group$D[9],
+    # E_G2 = freq_by_group$E[10],
+    # 
+    # A_G3 = freq_by_group$A[11],
+    # B_G3 = freq_by_group$B[12],
+    # C_G3 = freq_by_group$C[13],
+    # D_G3 = freq_by_group$D[14],
+    # E_G3 = freq_by_group$E[15],
+    
+    P1 = hits_by_group$`GRUPO 1`,
+    P3 = hits_by_group$`GRUPO 3`,
+    DISCRIMIN = round(hits_by_group$`GRUPO 3` - hits_by_group$`GRUPO 1`, 4)
+  )
+  
+  # Atualiza a tabela
+  tbl.discrimination.CE <- bind_rows(tbl.discrimination.CE, row)
+}
+
+# Ajuste para Visualização
+tbl.discrimination.CE <- tbl.discrimination.CE |>
+  mutate(
+    `DISCRIMINAÇÃO` = DISCRIMIN * 100,
+    `CLASSIFICAÇÃO` = ifelse(DISCRIMIN < 0.2, "Abaixo de 20%", "Ok")
+  ) |>
+  select(ITEM, `DISCRIMINAÇÃO`, `CLASSIFICAÇÃO`)
+
+# Visualizar
+tbl.discrimination.CE
+
+# ==============================================================================
+
+# Juntar as Tabelas de Discriminação
+tbl.discrimination <- rbind(tbl.discrimination.FG, tbl.discrimination.CE)
+
+# Tabela com o Pacote gt
+gt(tbl.discrimination) |>
+  cols_label(
+    ITEM = md("**Item**"),
+    `DISCRIMINAÇÃO` = md("**Discriminação**"),
+    `CLASSIFICAÇÃO` = md("**Classificação**")
+  ) |>
+  cols_align(
+    align = "center", columns = everything()
+  ) |>
+  fmt_number(
+    columns = everything(),
+    decimals = 2,
+    dec_mark = ","
+  ) |>
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+
+# --------------------------------
+# [3.7] CORRELAÇÃO PONTO-BISSERIAL
+# --------------------------------
+
+# Inicializa vetor para armazenar os coeficientes
+corr.bisserial <- c()
+
+# Iteração
+for (k in 1:n.itens) {
+  # Item avaliada na k-ésima iteraração
+  item_vector <- matrix.hits[, k]
+  
+  if (k == 14) {
+    # Armazena a informação
+    corr.bisserial[k] <- NA
+  } else {
+    # Escore sem o item k
+    score_exclude_k <- rowSums(matrix.hits[, -k], na.rm = TRUE)
+    
+    # Calcula correlação ponto-bisserial (omitindo NAs)
+    corr <- cor(item_vector, score_exclude_k, use = "complete.obs")
+    
+    # Armazena a informação
+    corr.bisserial[k] <- corr
+  }
+}
+
+# Criação da tabela com o resultado
+tbl.bisserial <- data.frame(
+  ITEM = index,
+  CORR_BISSERIAL = corr.bisserial
+)
+
+# Tabela com o Pacote gt
+gt(tbl.bisserial) |>
+  cols_label(
+    ITEM = md("**Item**"),
+    CORR_BISSERIAL = md("**Correlação Ponto-Bisserial**")
+  ) |>
+  cols_align(
+    align = "center", columns = everything()
+  ) |>
+  fmt_number(
+    columns = everything(),
+    decimals = 4,
+    dec_mark = ","
+  ) |>
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+
+# ----------------------
+# [3.8] ALFA DE CRONBACH
+# ----------------------
+
+# 1. Calcular o Alfa de Cronbach com todos os itens (Completo)
+alpha.cronbach <- psych::alpha(
+  df.hits |> select(ends_with("FG") | ends_with("CE")),
+  check.keys = TRUE,
+  na.rm = TRUE
+)
+
+# Visualizar Valor geral
+gt(alpha.cronbach$total) |>
+  cols_align(align = "center") |>
+  fmt_number(
+    columns = everything(),
+    decimals = 2,
+    dec_mark = ","
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels(columns = everything())
+  )
+
+# Visualizar valor geral
+alpha.cronbach$total$raw_alpha
+
+#alpha_itens <- alpha.cronbach$alpha.drop
+
+# 2. Avaliar o impacto da remoção de cada item
+gt(alpha.cronbach$alpha.drop) |>
+  cols_align(align = "center") |>
+  fmt_number(
+    columns = everything(),
+    decimals = 3,
+    dec_mark = ","
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels(columns = everything())
+  )
+
+# -------------------------------------------------------------------------
+# [3.9] TABELA DE ESTATÍTICAS CLÁSSICAS DA TEORIA CLÁSSICA DOS TESTES (TCT)
+# -------------------------------------------------------------------------
+
+# Construção da Tabela com Estatísticas Clássicas (TCT)
+tbl.TCT <- rbind(
+  data.frame(
+    ITEM = index,
+    PROP = tbl.prop_hit$PROP_HIT,
+    DISC = tbl.discrimination$`DISCRIMINAÇÃO`,
+    CORR = tbl.bisserial$CORR_BISSERIAL
+  ) |> slice(1:13) |> mutate(ALFA = alpha.cronbach$alpha.drop$raw_alpha[1:13]) |> rbind(NA),
+  data.frame(
+    ITEM = index,
+    PROP = tbl.prop_hit$PROP_HIT,
+    DISC = tbl.discrimination$`DISCRIMINAÇÃO`,
+    CORR = tbl.bisserial$CORR_BISSERIAL
+  ) |> slice(15:n.itens) |> mutate(ALFA = alpha.cronbach$alpha.drop$raw_alpha[14:(n.itens-1)])
+) |> mutate(ITEM = index)
+
+# Tabela gt
+gt(tbl.TCT) |>
+  cols_label(
+    ITEM = md("**Item**"),
+    PROP = md("**Proporção de Acertos (%)**"),
+    DISC = md("**Discriminação**"),
+    CORR = md("**Correlação Ponto-Bisserial**"),
+    ALFA = md("**Alfa de Cronbach**")
+  ) |>
+  cols_align(align = "center") |>
+  fmt_number(
+    columns = everything(),
+    decimals = 2,
+    dec_mark = ","
+  )
+
+# -----------------------------------
+# [3.10] ANÁLISE GRÁFICA DE CADA ITEM
+# -----------------------------------
+
+# Número de grupos que se quer analizar
+n.gr <- 5
+
+# Criação da Variável de Grupo
+df.hits <- df.hits |>
+  mutate(
+    GRUPO_5 = cut(
+      SCORE,
+      breaks = quantile(SCORE, probs = seq(0, 1, length.out = n.gr + 1), na.rm = TRUE),
+      include.lowest = TRUE,
+      labels = paste0("GRUPO ", 1:n.gr)
+    )
+  )
+
+# Função auxiliar
+TCT.plot_item <- function(gr) {
+  if (template.oficial[gr] == "ANULADA (E)") {
+    return(NULL)   # encerra a função sem erro
+  } else {
+    # Tabela com proporção por grupo e alternativa
+    df.plot <- data.frame(
+      GRUPO = df.hits$GRUPO_5,
+      RESPOSTA = matrix.resp[, gr]
+    ) |>
+      filter(RESPOSTA %in% LETTERS[1:5]) |>
+      group_by(GRUPO, RESPOSTA) |>
+      summarise(N = n(), .groups = "drop") |>
+      group_by(GRUPO) |>
+      mutate(PROP = N / sum(N)) |>
+      ungroup()
+    
+    # Percentual de acerto geral
+    hit.geral <- tbl.prop_hit$PROP_HIT[gr]
+    
+    # Criação do gráfico
+    plott <- ggplot(df.plot, aes(x = GRUPO, y = PROP, group = RESPOSTA, color = RESPOSTA)) +
+      geom_line(size = 1) + geom_point(size = 3) +
+      ylim(0, 1) +
+      geom_text(aes(label = RESPOSTA), vjust = -0.5, size = 3.5) +
+      scale_color_manual(
+        values = c(
+          "A" = "black", 
+          "B" = "red",
+          "C" = "green",
+          "D" = "blue",
+          "E" = "cyan"
+        )
+      ) +
+      labs(
+        title = paste0("ITEM: ", index[gr]),
+        subtitle = paste0("GABARITO: ", template.oficial[gr], " | ACERTO:", round(hit.geral, 2), "%"),
+        x = "Grupo de Desempenho",
+        y = "Proporção de Acertos"
+      ) +
+      theme_classic(base_size = 12) +
+      theme(
+        legend.position = "none", 
+        #axis.title = element_text(face = "bold"),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold")
+      )
+    
+    # Visualizar
+    print(plott)
+  }
+}
+
+for (k in 1:n.itens) {
+  TCT.plot_item(gr = k)
+}
+
+# ------------------------------------------------
+# [4] ANÁLISE VIA TEÓRIA DE RESPOSTA AO ITEM (TRI)
+# ------------------------------------------------
+
+library(mirt)
+
+# --------------------------
+# [4.1] PREPARAÇÃO DOS DADOS
+# --------------------------
+
+# ---------------------------
+# [4.1.1] MATRIZ DE RESPOSTAS
+# ---------------------------
+
+# Matriz de acertos (0/1) para todos os participantes
+matrix.resp <- matrix(NA, nrow = nrow(SIS.INFO.AUX), ncol = n.itens)
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.FG) {
+  # Extrai a Resposta e o Gabarito do item k e Armezena os Dados
+  matrix.resp[, k] <- sapply(SIS.INFO.AUX$DS_VT_ESC_OFG_ADJ, `[`, k)
+}
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.CE) {
+  # Ajuste do índice
+  k.adj <- k + 8
+  
+  # Extrai a Resposta e o Gabarito do item k e Armezena os Dados
+  matrix.resp[, k.adj] <- sapply(SIS.INFO.AUX$DS_VT_ESC_OCE_ADJ, `[`, k)
+}
+
+# -------------------------
+# [4.1.2] MATRIZ DE ACERTOS
+# -------------------------
+
+# Matriz de acertos (0/1) para todos os participantes
+matrix.hits <- matrix(NA, nrow = nrow(SIS.INFO.AUX), ncol = n.itens)
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.FG) {
+  # Extrai a Resposta e o Gabarito do item i
+  response.item <- sapply(SIS.INFO.AUX$DS_VT_ESC_OFG_ADJ, `[`, k)
+  
+  # Acertos (Verificação)
+  if (template.oficial[k] == "ANULADA (E)") {
+    # Acertos
+    hits <- NA
+    
+    # Armezenamento dos Dados
+    matrix.hits[, k] <- hits
+  } else {
+    # Acertos
+    hits <- as.integer(response.item == template.oficial[k])
+    
+    # Armezenamento dos Dados
+    matrix.hits[, k] <- hits
+  }
+}
+
+
+# Iteração de Armazenamento
+for (k in 1:n.itens.CE) {
+  # Extrai a Resposta e o Gabarito do item i
+  response.item <- sapply(SIS.INFO.AUX$DS_VT_ESC_OCE_ADJ, `[`, k)
+  
+  # Ajuste do índice
+  k.adj <- k + 8
+  
+  # Acertos (Verificação)
+  if (template.oficial[k.adj] == "ANULADA (E)") {
+    # Acertos
+    hits <- NA
+    
+    # Armezenamento dos Dados
+    matrix.hits[, k.adj] <- hits
+  } else {
+    # Acertos
+    hits <- as.integer(response.item == template.oficial[k.adj])
+    
+    # Armezenamento dos Dados
+    matrix.hits[, k.adj] <- hits
+  }
+}
+
+# -----------------------------------------------
+# [4.2] AJUSTE COM O MODELO DE 3 PARÂMETROS (3PL)
+# -----------------------------------------------
+
+# Ajustando o nome das colunas
+colnames(matrix.hits) <- index
+
+# Tirando coluna de NA
+matrix.hits <- matrix.hits[,-14]
+
+# Ajuste
+model.3pl <- mirt(
+  data = matrix.hits,                # Matriz de Dados
+  model = 1,                         # 1 Fator Latente
+  itemtype = "3PL",                  # Modelo Log de 3 Parâmetros
+  technical = list(NCYCLES = 2000),  # Número de iterações para ajuste
+  optimizer = "BFGS"                 # Algoritmo de Otimização
+)
+
+# Iteration: 2000, Log-Lik: -237731.292, Max-Change: 0.00058
+# Mensagens de aviso:
+#   1: data contains response patterns with only NAs 
+#   2: EM cycles terminated after 2000 iterations.
+
+# ----------------------------------------
+# [4.3] TABELA COM OS PARÂMETROS ESTIMADOS
+# ----------------------------------------
+
+# Salvar os parâmetros otimizados
+write.table(
+  x = coef(model.3pl, IRTpars = TRUE, simplify = TRUE)$items |> as_tibble(), 
+  file = "TRI_OUTPUTS_SISTEMAS/T1_PARAMS_ITENS.txt"
+)
+
+# Carregar os parâmetros otimizados
+params.itens <- read.table("TRI_OUTPUTS_SISTEMAS/T1_PARAMS_ITENS.txt", header = T) |>
+  mutate(item = index[!ifelse(index == "6ª CE", T, F)]) |>
+  select(item, a, b, g, -u)
+
+# Tabela com o Pacote gt
+gt(params.itens) |>
+  cols_align(columns = everything(), align = "center") |>
+  cols_label(
+    item = md("**Item**"),
+    a = md("**Discriminação ($a$)**"), 
+    b = md("**Dificuldade ($b$)**"),
+    g = md("**Acerto ao Acaso ($c$)**")
+  ) |>
+  fmt_number(
+    columns = everything(),
+    decimals = 4,
+    sep_mark = ".",
+    dec_mark = ","
+  ) |>
+  tab_source_note(
+    source_note = md("FG: Formação Geral; CE: Componente Específico.")
+  )
+
+# ----------------------------------------------------------------------------
+# [4.2] GRÁFICO DE DISPERSÃO: DIFICULDADE (EIXO X) VS PROP DE ACERTOS (EIXO Y)
+# ----------------------------------------------------------------------------
+
+bind_cols(
+  params.itens,
+  tbl.prop_hit |> filter(!is.na(PROP_HIT))
+) |>
+  select(-c(a, g, ITEM_ESPEC, GABARITO)) |>
+  # Gráfico com ggplot2
+  ggplot(aes(x = b, y = PROP_HIT)) +
+  geom_point(color = "blue", size = 2) +
+  geom_smooth(
+    formula = "y ~ x", method = "lm", 
+    color = "red", fill = "red", alpha = 0.25
+  ) +
+  geom_text(
+    aes(x = b, y = PROP_HIT, label = item), 
+    size = 3, vjust = -0.5, 
+    fontface = "bold"
+  ) +
+  labs(x = "Dificuldade", y = "Proporção de Acertos") +
+  theme_classic(base_size = 12) +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# -----------------------------------------------------
+# [4.3] HISTOGRAMA DAS PROEFICIÊNCIAS DOS PARTICIPANTES
+# -----------------------------------------------------
+
+# Salvar as proeficências dos participantes
+write.table(
+  x = data.frame(
+    # Estimar as proficiências (var latente) na escala (0,1)
+    theta_score = fscores(model.3pl, method = "EAP"), # pode usar "EAP", "MAP", etc.
+    # Transformação Linear
+    theta_trf = 100 * fscores(model.3pl, method = "EAP") + 500
+  ), 
+  file = "TRI_OUTPUTS_SISTEMAS/F1_PROEFICIENCIAS.txt"
+)
+
+# Carregar dados das proeficências
+theta.proeficy <- read.table("TRI_OUTPUTS_SISTEMAS/F1_PROEFICIENCIAS.txt", header = T) |>
+  rename(
+    theta_score = F1,
+    theta_trf = F1.1
+  )
+
+# Gráfico com ggplot2
+ggplot(data = theta.proeficy, aes(x = theta_trf)) +
+  geom_histogram(color = "white", fill = "steelblue") +
+  labs(
+    x = "Proeficiências Transformadas (Escala Linear)",
+    y = "Frqueência"
+  ) +
+  theme(
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold")
+  )
+
+# -------------------------------
+# [4.4] GRÁFICO DE AJUSTE DO ITEM
+# -------------------------------
+
+# Curva Teórica do Item
+theoretical.curve <- function(theta, par.a, par.b, par.c) par.c + (1 - par.c) / (1 + exp(-par.a * (theta - par.b)))
+
+# Criando Função para Fazer o Gráfico de Ajuste do Item
+plot.fit_item <- function(item_index, theta, responses, params, alpha = 0.05) {
+  
+  # Quantil da Normal(0, 1)
+  z <- qnorm(1 - alpha/2)
+  
+  # Nome do item
+  item_name <- index[!ifelse(index == "6ª CE", T, F)][item_index]
+  
+  # Respostas do item
+  y <- responses[[item_index]]
+  
+  # Quebras
+  breaks <- seq(-3, 3, by = 0.2)
+  
+  # Categorizar theta
+  groups.theta <- cut(theta, breaks = breaks, include.lowest = TRUE)
+  
+  # Vetor de Parâmetros
+  vec.par <- params |> select(-item) |> slice(item_index) |> as.numeric()
+  
+  # Curva Teórica
+  theory.curve <- theoretical.curve(
+    theta,
+    par.a = vec.par[1],
+    par.b = vec.par[2],
+    par.c = vec.par[3]
+  )
+  
+  # Data Frame da Curva Teórica
+  theory.curve.df <- data.frame(THETA = theta, Pr = theory.curve)
+  colnames(theory.curve.df) <- c("THETA", "Pr")
+  theory.curve.df <- theory.curve.df |> arrange(THETA)
+  
+  # Calcular proporção de acertos e intervalo de confiança (binomial)
+  data.empirical <- data.frame(THETA = theta, ACERTO = y, GRUPO = groups.theta)
+  colnames(data.empirical) <- c("THETA", "ACERTO", "GRUPO")
+  data.empirical <- data.empirical |>
+    group_by(GRUPO) |>
+    summarise(
+      n = n(),
+      PROP = mean(ACERTO),
+      CENTRO = mean(THETA)
+    ) |>
+    mutate(
+      SE = sqrt((PROP * (1 - PROP)) / n)
+    ) |>
+    mutate(
+      LOWER = pmax(0, PROP - z * SE),
+      UPPER = pmin(1, PROP + z * SE)
+    ) |>
+    filter(!is.na(GRUPO))
+  
+  print(
+    # Gráfico de Ajuste do Item com ggplot2
+    ggplot() +
+      geom_line(
+        data = theory.curve.df, aes(x = THETA, y = Pr), 
+        color = "blue", size = 1
+      ) +
+      geom_point(
+        data = data.empirical, aes(x = CENTRO, y = PROP), 
+        color = "red", size = 2
+      ) +
+      geom_errorbar(
+        data = data.empirical, aes(x = CENTRO, ymin = LOWER, ymax = UPPER), 
+        width = 0.1
+      ) +
+      labs(
+        title = paste("Ajuste do Item:", item_name),
+        subtitle = paste0(
+          "D = 1; a = ", format(round(vec.par[1], 4), big.mark = ".", decimal.mark = ","), 
+          "; b = ", format(round(vec.par[2], 4), big.mark = ".", decimal.mark = ","), 
+          "; c = ", format(round(vec.par[3], 4), big.mark = ".", decimal.mark = ",")
+        ),
+        x = bquote("Proeficiências (" ~ theta ~ ")"), 
+        y = bquote("Pr(" ~ theta ~ ")")
+      ) +
+      coord_cartesian(ylim = c(0, 1)) +
+      theme_classic(base_size = 12) +
+      theme(
+        plot.title = element_text(hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, face = "bold"),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold")
+      )
+  )
+}
+
+# Testa a função
+plot.fit_item(
+  item_index = 1,
+  theta = theta.proeficy$theta_score,
+  responses = matrix.hits,
+  params = params.itens
+)
